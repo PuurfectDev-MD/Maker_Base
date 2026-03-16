@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+
+
+body{
+    background-color: black;
+    color: white;
+}
+
+input{
+    background-color: white;
+}

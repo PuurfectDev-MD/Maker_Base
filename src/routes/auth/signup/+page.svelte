@@ -1,0 +1,88 @@
+<script lang="ts">
+	import { supabase } from '$lib/supabase';
+
+	let signing = $state(false);
+	let error_message = $state('');
+	async function signup(e: Event) {
+		e.preventDefault();
+
+		const form = e.target as HTMLFormElement;
+		if (form.password.value != form.password_confirm.value) {
+			error_message = 'Passwords dont match';
+			return;
+		}
+		signing = true;
+		const { data, error: signupError } = await supabase.auth.signUp({
+			email: form.email.value,
+			password: form.password.value,
+			options: {
+				data: {
+					username: form.username.value,
+					avatar_url: form.avatar_selection.value || null
+				}
+			}
+		});
+
+		if (signupError) {
+			signing = false;
+			error_message = signupError.message;
+			return;
+		}
+
+		window.location.href = '/auth/verify';
+	}
+</script>
+
+<h1>This is the signup page</h1>
+
+<div class="flex flex-row justify-center gap-y-4">
+	<form onsubmit={signup} class="pt-20 md:pt-10">
+		<div class="flex gap-x-5 p-4">
+			<h1 class="text-2xl font-bold md:text-3xl">Signup >></h1>
+			<h2 class="pt-1 text-2xl">To begin your quest!</h2>
+		</div>
+
+		<div class="row p-4">
+			<label>
+				Username:
+				<input class="ml-4 text-black" required type="text" name="username" />
+			</label>
+		</div>
+		<div class="row p-4">
+			<label>
+				Email:
+				<input class="ml-4 text-black" required type="email" name="email" />
+			</label>
+		</div>
+
+		<div class="row p-4">
+			<label>
+				Password:
+				<input class="ml-4 text-black" required type="password" name="password" />
+			</label>
+		</div>
+		<div class="row p-4">
+			<label>
+				Confirm Passowrd:
+				<input class="ml-4 text-black" required type="password" name="password_confirm" />
+			</label>
+		</div>
+		<div class="avatar_select">
+			<input name="avatar_selection" />
+		</div>
+		<button
+			type="submit"
+			class="mt-12 ml-[33%] rounded-xl bg-green-200 p-4 text-black md:mt-8 md:ml-0"
+		>
+			Signup</button
+		>
+	</form>
+
+	{#if error_message}
+		<div
+			class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+		>
+			<p class="px-8 py-4 text-xl md:text-2xl">{error_message}</p>
+		</div>
+	{/if}
+</div>
