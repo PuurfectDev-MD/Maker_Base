@@ -3,6 +3,8 @@
 
 	let signing = $state(false);
 	let error_message = $state('');
+	let email_sent = $state(false);
+
 	async function signup(e: Event) {
 		e.preventDefault();
 
@@ -16,6 +18,7 @@
 			email: form.email.value,
 			password: form.password.value,
 			options: {
+				emailRedirectTo: `${window.location.origin}/auth/verify`,
 				data: {
 					username: form.username.value,
 					avatar_url: form.avatar_selection.value || null
@@ -29,7 +32,7 @@
 			return;
 		}
 
-		window.location.href = '/auth/verify';
+		window.location.href = `/auth/verify`;
 	}
 </script>
 
@@ -77,12 +80,31 @@
 			Signup</button
 		>
 	</form>
-
-	{#if error_message}
-		<div
-			class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
-		>
-			<p class="px-8 py-4 text-xl md:text-2xl">{error_message}</p>
-		</div>
-	{/if}
 </div>
+
+<div class="flex flex-row justify-center gap-x-4 p-8">
+	<h2>Alteady Have an account?</h2>
+	<a href="/auth/login" class="rounded-2xl bg-amber-300 p-3"> Login</a>
+</div>
+
+{#if error_message}
+	<div
+		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+	>
+		<p class="px-8 py-4 text-xl md:text-2xl">{error_message}</p>
+	</div>
+{/if}
+
+{#if signing}
+	<div
+		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+	>
+		<p class="px-8 py-4 text-xl md:text-2xl">Creating your place :)</p>
+	</div>
+{/if}
+
+{#if email_sent}
+	<div class="mt-4 rounded-lg p-4 text-white">
+		Check your email and click the link to verify your account
+	</div>
+{/if}
