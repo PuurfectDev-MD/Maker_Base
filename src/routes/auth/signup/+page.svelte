@@ -83,7 +83,7 @@
 </div>
 
 <div class="flex flex-row justify-center gap-x-4 p-8">
-	<h2>Alteady Have an account?</h2>
+	<h2 class="p-3">Alteady Have an account?</h2>
 	<a href="/auth/login" class="rounded-2xl bg-amber-300 p-3"> Login</a>
 </div>
 

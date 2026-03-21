@@ -19,8 +19,9 @@ export const users = pgTable('users', {
 export const posts = pgTable('posts', {
     id: uuid('id').defaultRandom().primaryKey(),
     postId: uuid('post_id').defaultRandom().notNull(),
+    authorId: uuid('author_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
     title: text('title').notNull(),
-    slug: text('slug').notNull(),
+    slug: text('slug').notNull().unique(),
     content: text('content').notNull(),
     isPublic: boolean('is_public').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow(),

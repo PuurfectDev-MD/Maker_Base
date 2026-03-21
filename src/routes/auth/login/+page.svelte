@@ -4,6 +4,7 @@
 	let logging_in = $state(false);
 	let error_message = $state('');
 	async function login_with_email(e: Event) {
+		logging_in = true;
 		e.preventDefault();
 		const form = e.target as HTMLFormElement;
 		const { data, error } = await supabase.auth.signInWithPassword({
@@ -14,6 +15,9 @@
 		if (error) {
 			error_message = ' The credentials dont match to any user. Try again.';
 		}
+
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+		window.location.href = `/${data.user?.id}`;
 	}
 </script>
 
@@ -45,6 +49,11 @@
 			Login</button
 		>
 	</form>
+</div>
+
+<div class="bottom-0 mt-10 flex flex-row justify-center gap-x-10 p-8">
+	<h1 class="p-3">Dont have an account?</h1>
+	<a href="/auth/signup" class="rounded-2xl p-3 hover:bg-amber-200 hover:text-black">Signup</a>
 </div>
 
 {#if error_message}
