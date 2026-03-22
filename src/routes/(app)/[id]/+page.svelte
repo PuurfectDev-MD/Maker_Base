@@ -10,7 +10,7 @@
 
 	<ul class="bg-amber-600 px-4 py-4">
 		<li>
-			<h2>View all your notes</h2>
+			<h2><a href="/posts/view/{data.user.id}">View all your notes</a></h2>
 		</li>
 		<li>
 			<h2><a href="/posts/new">Make a new note</a></h2>
