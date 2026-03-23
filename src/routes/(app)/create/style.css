@@ -1,0 +1,12 @@
+.tiptap p{
+    margin: 1em 0;
+}
+
+
+.editor_heading{
+    color: red;
+}
+
+.editor_paragraph{
+    color:aqua
+}
