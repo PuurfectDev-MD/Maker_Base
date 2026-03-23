@@ -7,6 +7,7 @@
 
 	let { children, data } = $props();
 	let error_message = $state('');
+	let sidebar = $state(false);
 	async function logout() {
 		const { error } = await supabase.auth.signOut();
 
@@ -33,7 +34,17 @@
 		{#if !data.user}
 			<a href="/auth/signup" class="rounded-2xl bg-green-400 p-2">Signup</a>
 		{:else}
-			<a onclick={logout} href="/auth/login">Log Out</a>
+			<button class="cursor-pointer p-3" onclick={() => (sidebar = !sidebar)}>User</button>
+			{#if sidebar}
+				<div
+					class="absolute top-[10vh] right-10 flex flex-col gap-y-2 bg-amber-400 p-4"
+					onmouseleave={() => (sidebar = !sidebar)}
+				>
+					<a href="/about">You</a>
+					<a href="/setting">Setting</a>
+					<a onclick={logout} href="/auth/login">Logout</a>
+				</div>
+			{/if}
 		{/if}
 	</div>
 </nav>

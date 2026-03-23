@@ -2,9 +2,7 @@
 	import { getPostByUser } from '../../../../view/data.remote';
 	import { page } from '$app/state';
 
-	console.log('On the way to get the postspromise');
 	let postPromise = getPostByUser(page.params.id!);
-	console.log('Fetching post of: ', page.params.id!);
 </script>
 
 {#await postPromise}

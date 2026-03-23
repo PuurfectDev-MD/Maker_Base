@@ -22,8 +22,6 @@ export const getPostBySlug = query(v.string(), async (viewSlug) => {
 export const getPostByUser = query(v.string(), async (id) => {
     const event = getRequestEvent()
     const user_id = event.locals.user.id
-    console.log("This is the userid", (user_id))
-    console.log("this is the id from page:", id)
     if (id !== user_id) {
         return { type: "unauthorized", message: "Unauthorized" }
     }
