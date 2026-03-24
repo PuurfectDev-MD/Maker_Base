@@ -39,10 +39,12 @@
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
+		"@floating-ui/dom": "^1.7.6",
 		"@layerstack/tailwind": "^2.0.0-next.22",
 		"@supabase/ssr": "^0.9.0",
 		"@supabase/supabase-js": "^2.99.1",
 		"@tiptap/core": "^3.20.4",
+		"@tiptap/extension-floating-menu": "^3.20.4",
 		"@tiptap/extension-image": "^3.20.4",
 		"@tiptap/starter-kit": "^3.20.4",
 		"d3-array": "^3.2.4",

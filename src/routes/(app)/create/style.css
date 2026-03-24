@@ -3,10 +3,61 @@
 }
 
 
-.editor_heading{
-    color: red;
+.editor{
+    background-color: white;
+    color: black;
+    height: auto;
+
 }
 
-.editor_paragraph{
-    color:aqua
+.editor .ProseMirror{
+     min-height: 50vh;
+    height: auto;
+    max-width: 100%;
+    outline: none;
+    padding: 1rem;
+}
+ 
+
+.floating-menu { 
+    background-color: aliceblue;
+    color: black;
+    border-radius: 3vh;
+   margin: 2vh;
+}
+
+
+.editor h1{
+    font-size: xx-large;
+    font-weight: 800;
+}
+
+
+.editor h2{
+    font-size: x-large;
+    font-weight: 800;
+}
+
+
+.editor h3{
+    font-size:large;
+    font-weight: 700;
+}
+
+.editor_bullets{
+    margin-left: 4vh;
+    list-style-type: disc;
+}
+
+
+.editor_ordered-lists{
+    margin-left: 4vh;
+    list-style-type: decimal;
+}
+
+
+.editor img{
+    width: 800px;
+    height: 500px;
+    justify-self: center;
 }
