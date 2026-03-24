@@ -3,8 +3,7 @@ import Image from '@tiptap/extension-image';
 import StarterKit from '@tiptap/starter-kit';
 import FloatingMenu from '@tiptap/extension-floating-menu';
 import { Editor } from '@tiptap/core';
-import { config } from 'process';
-export function createEditor(element: HTMLDivElement, floatingMenuDiv: HTMLDivElement): Editor {
+export function createEditor(element: HTMLDivElement, floatingMenuDiv: HTMLDivElement, onTransaction: () => void): Editor {
     const editor = new Editor({
         element: element,
         extensions: [
@@ -15,7 +14,7 @@ export function createEditor(element: HTMLDivElement, floatingMenuDiv: HTMLDivEl
                         class: 'editor_heading'
                     }
                 },
-                undoRedo: false,
+                // undoRedo: false,
                 paragraph: {
                     HTMLAttributes: {
                         class: 'editor_paragraph'
@@ -39,10 +38,14 @@ export function createEditor(element: HTMLDivElement, floatingMenuDiv: HTMLDivEl
             })
         ],
 
+        content: `<p>Working on your next big thing?</p>`,
+        onTransaction: () => {
+            onTransaction();
+        },
         editorProps: {
             handlePaste(view, event) {
                 const items = event.clipboardData?.items
-                if (!items) { return false }
+                if (!items) return false
                 const imageItem = Array.from(items).find(item => item.type.startsWith('image/'))
                 const file = imageItem?.getAsFile()
                 const reader = new FileReader()

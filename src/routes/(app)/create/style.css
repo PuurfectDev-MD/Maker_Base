@@ -7,11 +7,12 @@
     background-color: white;
     color: black;
     height: auto;
+    min-height: 100vh;
 
 }
 
 .editor .ProseMirror{
-     min-height: 50vh;
+    min-height: 100vh;
     height: auto;
     max-width: 100%;
     outline: none;
@@ -23,7 +24,7 @@
     background-color: aliceblue;
     color: black;
     border-radius: 3vh;
-   margin: 2vh;
+    margin: 2vh;
 }
 
 
@@ -60,4 +61,9 @@
     width: 800px;
     height: 500px;
     justify-self: center;
+}
+
+
+.option-menu .isactive {
+   color: blue;
 }
