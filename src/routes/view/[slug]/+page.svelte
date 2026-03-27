@@ -8,12 +8,12 @@
 	<p>Loading post...</p>
 {:then result}
 	{#if result.type == 'success'}
-		<div class="flex w-full flex-col items-center justify-center gap-y-5 bg-amber-600 p-8">
-			<div class="flex w-full flex-row">
-				<h1 class="font-bol left-1/2 flex-1 text-center text-2xl">{result.post.title}</h1>
-				<a href="/post/update/{result.post.isPublic}">Edit</a>
-			</div>
-			<p class="pt-8 text-lg">{result.post.content}</p>
+		<div class="flex w-full flex-row items-center gap-y-5 bg-amber-600 p-8">
+			<h1>{result.post.title}</h1>
+			<button class="ml-auto">Edit</button>
+		</div>
+		<div>
+			{@html result.post.content}
 		</div>
 	{:else if result.type == 'db_error'}
 		<div

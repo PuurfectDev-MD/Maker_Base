@@ -11,10 +11,12 @@
 	{#if result.type == 'success'}
 		<div class="flex flex-col gap-y-4 bg-red-400 text-white">
 			{#each result.post as post}
-				<div class="flex flex-col gap-y-4 bg-amber-200">
-					<h1>{post.title}</h1>
-					<p>{post.content}</p>
-				</div>
+				<a href="/view/{post.slug}">
+					<div class="flex flex-col gap-y-4 bg-amber-200">
+						<h1>{post.title}</h1>
+						<p>{post.content}</p>
+					</div>
+				</a>
 			{/each}
 		</div>
 	{:else}

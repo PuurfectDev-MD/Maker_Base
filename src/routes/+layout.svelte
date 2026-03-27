@@ -27,7 +27,11 @@
 		<a href="/">Home</a>
 		<a href="/explore">Explore</a>
 		<a href="/create">Create</a>
-		<a href="/info">Info</a>
+		{#if data.user?.id}
+			<a href="/info">Community</a>
+		{:else}
+			<a href="/info">Info</a>
+		{/if}
 	</div>
 
 	<div class="flex justify-end pr-10">

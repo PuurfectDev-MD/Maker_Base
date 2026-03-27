@@ -77,9 +77,8 @@
 <div
 	class="option-menu w-max-[100%] fixed top-[50%] left-[-1vh] z-50 flex flex-col justify-center gap-y-4 rounded-2xl bg-amber-100 p-4 text-black"
 >
-	<button
-		class="cursor-pointer"
-		onclick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>H3</button
+	<button class="cursor-pointer" onclick={() => editor.chain().focus().toggleBold().run()}
+		>Bold</button
 	>
 	<button
 		class="cursor-pointer {editor?.isActive('italic') ? 'isactive' : ''} "
