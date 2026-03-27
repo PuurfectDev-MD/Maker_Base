@@ -3,11 +3,32 @@
 	import { onDestroy, onMount } from 'svelte';
 	import './style.css';
 	import { createEditor } from './editorConfig';
+	import { goto } from '$app/navigation';
+	import { saveToDb } from '../posts/posts.remote';
 
+	let data = $props();
+	let title = $state('');
+	let isPublic = $state(true);
 	let element: HTMLDivElement;
 	let editor: Editor = $state(null!);
 	let floatingMenuDiv: HTMLDivElement;
 
+	let error = $state('');
+
+	let posting = $state(false);
+	async function submitPost() {
+		posting = true;
+		let content = editor.getHTML();
+		const { type, message } = await saveToDb({ content, title, isPublic });
+		posting = false;
+
+		console.log('type:' + type + 'message:' + message);
+		if (type !== 'success') {
+			error = message;
+		} else {
+			goto('/');
+		}
+	}
 	onMount(() => {
 		editor = createEditor(element, floatingMenuDiv, () => {
 			editor = editor;
@@ -17,7 +38,22 @@
 	onDestroy(() => editor?.destroy());
 </script>
 
-<div bind:this={element} class="editor mx-4 mt-10 h-auto rounded-2xl p-0"></div>
+<div class="flex justify-end bg-red-500 p-3">
+	<button class="cursor-pointer p-2" onclick={submitPost}>Submit</button>
+</div>
+
+<div class="mt-5 flex-row justify-between">
+	<label class="bg-amber-100 p-4 text-2xl">
+		Title:
+		<input type="text" bind:value={title} />
+	</label>
+
+	<label for="checkbox">
+		<input type="checkbox" class="text-2xl" bind:checked={isPublic} />
+	</label>
+</div>
+
+<div bind:this={element} class="editor mt-10 h-auto rounded-2xl p-0"></div>
 
 <div bind:this={floatingMenuDiv} class="floating-menu">
 	<button
@@ -39,7 +75,7 @@
 </div>
 
 <div
-	class="option-menu fixed top-[50%] left-[-1vh] z-50 flex flex-col justify-center gap-y-4 rounded-2xl bg-amber-100 p-4 text-black"
+	class="option-menu w-max-[100%] fixed top-[50%] left-[-1vh] z-50 flex flex-col justify-center gap-y-4 rounded-2xl bg-amber-100 p-4 text-black"
 >
 	<button
 		class="cursor-pointer"
@@ -63,3 +99,11 @@
 		onclick={() => editor.chain().focus().toggleBulletList().run()}>Bullets</button
 	>
 </div>
+
+{#if error}
+	<div
+		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+	>
+		<p class="px-8 py-4 text-xl md:text-2xl">{error}</p>
+	</div>
+{/if}
