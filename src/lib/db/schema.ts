@@ -33,10 +33,12 @@ export const posts = pgTable('posts', {
 
 
 export const comments = pgTable('comments', {
-    id: uuid('id').primaryKey(),
-    postId: uuid('post_id').notNull().references(() => posts.id, { onDelete: 'cascade' }),
+    id: uuid('id').defaultRandom().primaryKey(),
+    postSlug: text('post_slug').notNull().references(() => posts.slug, { onDelete: 'cascade' }),
     userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-    createdAt: timestamp('created_at').notNull().defaultNow()
+    userName: text('user_name').notNull().references(() => users.username, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    content: text('comment').notNull()
 })
 
 export const dots = pgTable('dots', {

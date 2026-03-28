@@ -6,7 +6,6 @@
 	import { goto } from '$app/navigation';
 	import { saveToDb } from '../posts/posts.remote';
 
-	let data = $props();
 	let title = $state('');
 	let isPublic = $state(true);
 	let element: HTMLDivElement;
@@ -16,6 +15,8 @@
 	let error = $state('');
 
 	let posting = $state(false);
+	let visbile_menu = $state(true);
+
 	async function submitPost() {
 		posting = true;
 		let content = editor.getHTML();
@@ -74,30 +75,40 @@
 	>
 </div>
 
-<div
-	class="option-menu w-max-[100%] fixed top-[50%] left-[-1vh] z-50 flex flex-col justify-center gap-y-4 rounded-2xl bg-amber-100 p-4 text-black"
->
-	<button class="cursor-pointer" onclick={() => editor.chain().focus().toggleBold().run()}
-		>Bold</button
+{#if visbile_menu}
+	<div
+		class="option-menu w-max-[100%] fixed top-[50%] left-[-1vh] z-50 flex flex-col justify-center gap-y-4 rounded-2xl bg-amber-100 p-4 text-black"
 	>
-	<button
-		class="cursor-pointer {editor?.isActive('italic') ? 'isactive' : ''} "
-		onclick={() => editor.chain().focus().toggleItalic().run()}>Itc</button
-	>
-	<button
-		class="cursor-pointer {editor?.isActive('code') ? 'isactive' : ''}"
-		onclick={() => editor.chain().focus().toggleCode().run()}>Code</button
-	>
+		<button class="cursor-pointer" onclick={() => editor.chain().focus().toggleBold().run()}
+			>Bold</button
+		>
+		<button
+			class="cursor-pointer {editor?.isActive('italic') ? 'isactive' : ''} "
+			onclick={() => editor.chain().focus().toggleItalic().run()}>Itc</button
+		>
+		<button
+			class="cursor-pointer {editor?.isActive('code') ? 'isactive' : ''}"
+			onclick={() => editor.chain().focus().toggleCode().run()}>Code</button
+		>
 
-	<button
-		class="cursor-pointer {editor?.isActive('orderedList') ? 'bg-red-400' : ''}"
-		onclick={() => editor.chain().focus().toggleOrderedList().run()}>List</button
+		<button
+			class="cursor-pointer {editor?.isActive('orderedList') ? 'bg-red-400' : ''}"
+			onclick={() => editor.chain().focus().toggleOrderedList().run()}>List</button
+		>
+		<button
+			class="cursor-pointer {editor?.isActive('bulletList') ? 'isactive' : ''}"
+			onclick={() => editor.chain().focus().toggleBulletList().run()}>Bullets</button
+		>
+
+		<button class="cursor-pointer" onclick={() => (visbile_menu = false)}> C </button>
+	</div>
+{:else}
+	<div
+		class="option-menu w-max-[100%] fixed bottom-0 left-[-1vh] z-50 flex flex-col justify-center gap-y-4 rounded-2xl bg-amber-100 p-4 text-black"
 	>
-	<button
-		class="cursor-pointer {editor?.isActive('bulletList') ? 'isactive' : ''}"
-		onclick={() => editor.chain().focus().toggleBulletList().run()}>Bullets</button
-	>
-</div>
+		<button onclick={() => (visbile_menu = true)} class="cursor-pointer bg-red-300 p-2"> O </button>
+	</div>
+{/if}
 
 {#if error}
 	<div

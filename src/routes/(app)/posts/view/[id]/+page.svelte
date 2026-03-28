@@ -14,7 +14,6 @@
 				<a href="/view/{post.slug}">
 					<div class="flex flex-col gap-y-4 bg-amber-200">
 						<h1>{post.title}</h1>
-						<p>{post.content}</p>
 					</div>
 				</a>
 			{/each}
