@@ -1,5 +1,4 @@
-import { pgTable, text, timestamp, uuid, boolean } from 'drizzle-orm/pg-core'
-
+import { pgTable, text, timestamp, uuid, boolean, integer, unique } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
     id: uuid('id').defaultRandom().primaryKey().notNull(),
@@ -14,23 +13,17 @@ export const users = pgTable('users', {
         .notNull(),
 })
 
-
-
 export const posts = pgTable('posts', {
-    id: uuid('id').defaultRandom().primaryKey(),
-    postId: uuid('post_id').defaultRandom().notNull(),
+    postId: uuid('id').defaultRandom().primaryKey(),
     authorId: uuid('author_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
     title: text('title').notNull(),
     slug: text('slug').notNull().unique(),
     content: text('content').notNull(),
+    dotsCount: integer('dots_count').notNull().default(0),
     isPublic: boolean('is_public').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow(),
-    updatedAt: timestamp('updated_at').defaultNow().$onUpdate(
-        () => new Date()
-    ),
-
+    updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()),
 })
-
 
 export const comments = pgTable('comments', {
     id: uuid('id').defaultRandom().primaryKey(),
@@ -42,9 +35,10 @@ export const comments = pgTable('comments', {
 })
 
 export const dots = pgTable('dots', {
-    id: uuid('id').primaryKey(),
-    postId: uuid('post_id').notNull().references(() => posts.id, { onDelete: 'cascade' }),
+    id: uuid('id').defaultRandom().primaryKey(),
+    postId: uuid('post_id').notNull().references(() => posts.postId, { onDelete: 'cascade' }),
     userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
     createdAt: timestamp('created_at').notNull().defaultNow()
-})
-
+}, (table) => ({
+    uniqueDot: unique().on(table.postId, table.userId)
+}))

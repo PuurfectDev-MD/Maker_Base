@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CommentSection from './CommentSection.svelte';
+	import ReactionSection from './ReactionSection.svelte';
 	let { data } = $props();
 </script>
 
@@ -26,4 +27,5 @@
 	</div>
 {/if}
 
+<ReactionSection {data}></ReactionSection>
 <CommentSection {data}></CommentSection>

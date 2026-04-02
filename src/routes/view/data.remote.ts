@@ -68,3 +68,15 @@ export const createComment = form(v.object({
     return { type: "success", message: "Comment posted" }
 }
 )
+
+
+export const getDots = query(v.string(), async (postSlug) => {
+    const { data, error } = await supabase.from("posts").select("dots_count").eq("slug", postSlug).single()
+
+    if (error) {
+        console.log(error.message)
+        return { type: "db_error", message: "There was an error fetching dots" }
+    }
+
+    return { dotsCount: data.dots_count }
+})
