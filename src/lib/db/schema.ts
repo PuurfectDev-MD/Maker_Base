@@ -36,9 +36,9 @@ export const comments = pgTable('comments', {
 
 export const dots = pgTable('dots', {
     id: uuid('id').defaultRandom().primaryKey(),
-    postId: uuid('post_id').notNull().references(() => posts.postId, { onDelete: 'cascade' }),
+    postSlug: text('post_slug').notNull().references(() => posts.slug, { onDelete: 'cascade' }),
     userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
     createdAt: timestamp('created_at').notNull().defaultNow()
 }, (table) => ({
-    uniqueDot: unique().on(table.postId, table.userId)
+    uniqueDot: unique().on(table.postSlug, table.userId)
 }))

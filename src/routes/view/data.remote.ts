@@ -1,6 +1,5 @@
-import { form, getRequestEvent, query } from "$app/server";
+import { command, form, getRequestEvent, query } from "$app/server";
 import { supabase } from "$lib/supabase";
-import { redirect } from "@sveltejs/kit";
 import * as v from 'valibot';
 
 export const getPostBySlug = query(v.string(), async (viewSlug) => {
@@ -80,3 +79,27 @@ export const getDots = query(v.string(), async (postSlug) => {
 
     return { dotsCount: data.dots_count }
 })
+
+
+export const addDots = command(v.string(), async (postSlug) => {
+    const event = getRequestEvent()
+    const user = event.locals.user.id
+
+    if (!user) {
+        return { type: "unauthorized", message: "You can send dots without signing in" }
+    }
+
+    const { data, error } = await event.locals.supabase.rpc("add_dot", { p_slug: postSlug, p_user_id: user })
+
+    if (error) {
+        return { type: "db_error", message: "Cannot send dots right now" }
+    }
+    if (data == "already_dotted") {
+        return { type: "already_dotted", message: "You have already sent your dot." }
+    }
+
+    if (data == "success") {
+        return { type: "success", message: "Dots sent!" }
+    }
+}
+)
