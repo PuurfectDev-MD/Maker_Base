@@ -8,10 +8,12 @@ export async function load({ locals }) {
     }
 
     const resultForPost = await getPostCountPerMonth(locals.user.id)
+    const postPerDayData = await getPostPerDay(locals.user.id)
 
     return {
         user: locals.user,
-        postsPerMonth: resultForPost.type == "success" ? resultForPost.data : {}
+        postsPerMonth: resultForPost.type == "success" ? resultForPost.data : {},
+        postsPerDay: postPerDayData?.type == "success" ? postPerDayData?.PostData : {}
 
     }
 }
@@ -31,16 +33,44 @@ async function getPostCountPerMonth(author_id: string) {
 
     const counts: Record<string, number> = {}
     for (const post of data) {
-        const date = new Date(post.created_at)
-        const key = new Date(date.getFullYear(), date.getMonth(), 1).toISOString()
-
+        const dateStr = post.created_at as string
+        const [year, month] = dateStr.split('-')
+        const key = `${year}-${month}`
         counts[key] = (counts[key] ?? 0) + 1
     }
-
-    const result = Object.entries(counts).map(([date, value]) => ({
-        date: new Date(date),
+    const result = Object.entries(counts).map(([key, value]) => ({
+        date: new Date(key),
         value
     }))
 
     return { type: "success", data: result }
+}
+
+async function getPostPerDay(author_id: string) {
+    const event = getRequestEvent()
+    const user = event.locals.user.id
+
+    if (author_id !== user) {
+        return
+    }
+
+    const countsByDate = new Map<string, number>()
+
+    const { data, error } = await event.locals.supabase.from("posts").select("created_at").eq("author_id", author_id)
+
+    if (error) {
+        return { type: "db_error", message: "There was an issue fetching your posts data" }
+    }
+
+    for (const post of data ?? []) {
+        const dateStr = (post.created_at as string).split("T")[0]  // "2026-04-05"
+        countsByDate.set(dateStr, (countsByDate.get(dateStr) ?? 0) + 1)
+    }
+
+    const calenderData = Array.from(countsByDate.entries()).map(([dateStr, count]) => ({
+        date: new Date(dateStr + "T00:00:00"),  // midnight, no timezone shift
+        value: count
+    }))
+
+    return { type: "success", PostData: calenderData }
 }

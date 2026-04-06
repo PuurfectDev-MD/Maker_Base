@@ -12,3 +12,11 @@ input{
     background-color: white;
     color: black;
 }
+
+
+:root{
+    --color-calendar-100: oklch(96.2% 0.044 156.743);
+    --color-calendar-300: oklch(87.1% 0.15 154.449);
+    --color-caledar-500: oklch(72.3% 0.219 149.579);
+    --color-calendar-700: oklch(52.7% 0.154 150.069);
+}

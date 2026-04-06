@@ -14,6 +14,7 @@
 		if (result?.type !== 'success') {
 			console.log(result?.message);
 			errorMsg = result?.message ?? '';
+			setTimeout(() => (errorMsg = ''), 3000);
 			return;
 		}
 
@@ -35,11 +36,9 @@
 			>
 				.
 			</button>
-			<button class="cursor-pointer px-3 py-2 hover:scale-110 hover:bg-red-500"> ? </button>
 		</div>
 		<div class="flex flex-row justify-end">
 			<h2 class="">{result.dotsCount + (dotted ? 1 : 0)}Dots</h2>
-			<h2 class="">Plackt</h2>
 		</div>
 	</div>
 {/await}

@@ -3,10 +3,12 @@
 
 	import { onMount } from 'svelte';
 
+	import CalendarActivity from './CalendarActivity.svelte';
 	let { data } = $props();
 	let mounted = $state(false);
 	onMount(() => (mounted = true));
 	const chartData = $derived(data.postsPerMonth);
+	const calenderData = data.postsPerDay;
 </script>
 
 <div class="grid max-h-[80%] grid-cols-2">
@@ -32,3 +34,5 @@
 		height={300}
 	/>
 {/if}
+
+<CalendarActivity data={calenderData}></CalendarActivity>
