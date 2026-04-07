@@ -43,13 +43,14 @@
 	<button class="cursor-pointer p-2" onclick={submitPost}>Submit</button>
 </div>
 
-<div class="mt-5 flex-row justify-between">
-	<label class="bg-amber-100 p-4 text-2xl">
+<div class="mt-5 flex w-full flex-row justify-between">
+	<label class="bg-amber-100 p-4 pl-6 text-2xl">
 		Title:
 		<input type="text" bind:value={title} />
 	</label>
 
-	<label for="checkbox">
+	<label for="checkbox" class="pr-6">
+		Public
 		<input type="checkbox" class="text-2xl" bind:checked={isPublic} />
 	</label>
 </div>
