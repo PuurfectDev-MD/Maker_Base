@@ -16,7 +16,9 @@ export const users = pgTable('users', {
 export const posts = pgTable('posts', {
     postId: uuid('id').defaultRandom().primaryKey(),
     authorId: uuid('author_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    authorUsername: text("author_username").notNull().references(() => users.username, { onDelete: 'cascade' }),
     title: text('title').notNull(),
+    description: text('description').notNull(),
     slug: text('slug').notNull().unique(),
     content: text('content').notNull(),
     dotsCount: integer('dots_count').notNull().default(0),

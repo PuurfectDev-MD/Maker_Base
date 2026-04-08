@@ -7,6 +7,7 @@
 	import { saveToDb } from '../posts/posts.remote';
 
 	let title = $state('');
+	let description = $state('');
 	let isPublic = $state(true);
 	let element: HTMLDivElement;
 	let editor: Editor = $state(null!);
@@ -20,7 +21,7 @@
 	async function submitPost() {
 		posting = true;
 		let content = editor.getHTML();
-		const { type, message } = await saveToDb({ content, title, isPublic });
+		const { type, message } = await saveToDb({ content, title, isPublic, description });
 		posting = false;
 
 		console.log('type:' + type + 'message:' + message);
@@ -39,20 +40,35 @@
 	onDestroy(() => editor?.destroy());
 </script>
 
-<div class="flex justify-end bg-red-500 p-3">
-	<button class="cursor-pointer p-2" onclick={submitPost}>Submit</button>
-</div>
+<div class="flex flex-row justify-between">
+	<div class="flex flex-col p-4">
+		<label class="w-full p-4 pl-6 text-2xl">
+			Title:
+			<input
+				type="text"
+				class="input-title"
+				placeholder="How does  ......  work ?"
+				bind:value={title}
+			/>
+		</label>
+		<label class="flex items-center p-4 pl-6 text-2xl">
+			Description:
+			<input
+				type="text"
+				class="input-description ml-3"
+				placeholder="Dont forget this .... :)"
+				bind:value={description}
+			/>
+		</label>
+	</div>
 
-<div class="mt-5 flex w-full flex-row justify-between">
-	<label class="bg-amber-100 p-4 pl-6 text-2xl">
-		Title:
-		<input type="text" bind:value={title} />
-	</label>
-
-	<label for="checkbox" class="pr-6">
-		Public
-		<input type="checkbox" class="text-2xl" bind:checked={isPublic} />
-	</label>
+	<div class="flex flex-col gap-y-8 p-2">
+		<button class=" cursor-pointer p-2" onclick={submitPost}>Submit</button>
+		<label for="checkbox" class="mr-2 flex items-center pr-6">
+			Public
+			<input type="checkbox" class="ml-3 text-2xl" bind:checked={isPublic} />
+		</label>
+	</div>
 </div>
 
 <div bind:this={element} class="editor mt-10 h-auto rounded-2xl p-0"></div>
@@ -116,5 +132,13 @@
 		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
 	>
 		<p class="px-8 py-4 text-xl md:text-2xl">{error}</p>
+	</div>
+{/if}
+
+{#if posting}
+	<div
+		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-green-300 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+	>
+		<p class="px-8 py-4 text-xl md:text-2xl">Sending it to the world ...</p>
 	</div>
 {/if}

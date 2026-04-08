@@ -41,7 +41,10 @@
 	</div>
 
 	<div class="flex justify-end pr-10">
-		<select bind:value={theme}>
+		<select
+			bind:value={theme}
+			class=" appearance-none border-0 border-b-2 border-black bg-transparent py-2 pr-8 outline-none focus:border-white focus:ring-0"
+		>
 			{#each themes as t}
 				<option value={t}>{t}</option>
 			{/each}

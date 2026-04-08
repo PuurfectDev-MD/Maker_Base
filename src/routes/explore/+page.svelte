@@ -4,17 +4,21 @@
 	const errorMessage = $derived(data.error);
 </script>
 
-<h1>This is the explore page</h1>
+<h1 class="p-2 pl-8">Explore the top notes :)</h1>
 
 {#if !errorMessage}
-	<div class=" grid h-screen grid-cols-3 p-4">
+	<div class=" grid min-h-screen grid-cols-3 items-stretch gap-8 p-4">
 		{#each posts as post}
-			<div class="card m-4">
+			<div class="card flex h-full max-h-[50%] flex-col p-4">
 				<a href="/view/{post.slug}" class="!no-underline">
 					<h1>{post.title}</h1>
-					<h3>This a parapgrah</h3>
-					<h3>Dots count {post.dots_count}</h3>
+					<h3 class="description pt-9">{post.description}</h3>
 				</a>
+
+				<div class="mt-auto flex flex-row justify-between">
+					<h3>From {post.author_username}</h3>
+					<h3>. {post.dots_count}</h3>
+				</div>
 			</div>
 		{/each}
 	</div>
