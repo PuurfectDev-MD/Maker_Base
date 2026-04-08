@@ -8,7 +8,7 @@
 <div class="p-4">
 	<h1>Options:</h1>
 
-	<ul class="bg-amber-600 px-4 py-4">
+	<ul class=" px-4 py-4">
 		<li>
 			<h2><a href="/posts/view/{data.user.id}">View all your notes</a></h2>
 		</li>

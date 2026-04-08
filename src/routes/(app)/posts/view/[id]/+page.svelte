@@ -9,13 +9,15 @@
 	<p>Loading</p>
 {:then result}
 	{#if result.type == 'success'}
-		<div class="flex flex-col gap-y-4 bg-red-400 text-white">
+		<div class="flex flex-col">
 			{#each result.post as post}
-				<a href="/view/{post.slug}">
-					<div class="flex flex-col gap-y-4 bg-amber-200">
-						<h1>{post.title}</h1>
-					</div>
-				</a>
+				<div class="card">
+					<a href="/view/{post.slug}">
+						<div class="flex flex-col gap-y-4">
+							<h1>{post.title}</h1>
+						</div>
+					</a>
+				</div>
 			{/each}
 		</div>
 	{:else}

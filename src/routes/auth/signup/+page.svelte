@@ -36,10 +36,8 @@
 	}
 </script>
 
-<h1>This is the signup page</h1>
-
 <div class="flex flex-row justify-center gap-y-4">
-	<form onsubmit={signup} class="pt-20 md:pt-10">
+	<form onsubmit={signup} class="px-10 pt-20 pb-20 md:pt-10">
 		<div class="flex gap-x-5 p-4">
 			<h1 class="text-2xl font-bold md:text-3xl">Signup >></h1>
 			<h2 class="pt-1 text-2xl">To begin your quest!</h2>

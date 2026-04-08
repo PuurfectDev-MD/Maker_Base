@@ -5,12 +5,11 @@
 </script>
 
 {#if data.type == 'success'}
-	<div class="flex w-full flex-row items-center gap-y-5 bg-amber-600 p-8">
-		<h1>{data.post.title}</h1>
-		<h2>{data.post.slug}</h2>
-		<button class="ml-auto">Edit</button>
+	<div class="flex w-full flex-row items-center justify-between p-4">
+		<h1 class="p-2">{data.post.title}</h1>
+		<button class="p-2">Edit</button>
 	</div>
-	<div>
+	<div class="p-6">
 		{@html data.post.content}
 	</div>
 {:else if data.type == 'db_error'}

@@ -23,7 +23,8 @@
 {#await commentPromise}
 	<p>Loading comments</p>
 {:then response}
-	<div class="comment-section w-scree m-4 h-auto rounded-xl bg-amber-900 p-4">
+	<div class="comment-section w-scree rounded-x m-4 h-auto p-4">
+		<h1>Comments</h1>
 		<div class="flex justify-end">
 			<button
 				class="cursor-pointer rounded-xl bg-blue-900 px-3 py-1"

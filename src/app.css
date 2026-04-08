@@ -3,20 +3,237 @@
 @source "../node_modules/svelte-ux/**/*.{svelte,js}";
 @import 'layerchart/shadcn-svelte.css';
 
-body{
-    background-color: black;
-    color: white;
-}
 
-input{
-    background-color: white;
-    color: black;
-}
-
-
-:root{
+/* :root{
     --color-calendar-100: oklch(96.2% 0.044 156.743);
     --color-calendar-300: oklch(87.1% 0.15 154.449);
     --color-caledar-500: oklch(72.3% 0.219 149.579);
     --color-calendar-700: oklch(52.7% 0.154 150.069);
+} */
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Theme: Warm Ivory */
+:root,
+[data-theme="warm-ivory"] {
+  --bg-page:        #F6F1E4;
+  --bg-card:        #EDE4CE;
+  --bg-card-hover:  rgba(255, 255, 255, 0.55);
+  --bg-code:        rgba(61, 43, 31, 0.06);
+
+  --text-primary:   #3D2B1F;
+  --text-secondary: #5A3E2B;
+  --text-muted:     #8A6E58;
+  --text-on-accent: #FFF8EE;
+
+  --accent:         #C4803A;
+  --accent-soft:    rgba(196, 128, 58, 0.15);
+  --tag-green:      #7B9E6B;
+  --tag-green-soft: rgba(123, 158, 107, 0.18);
+
+  --border:         rgba(80, 50, 20, 0.15);
+  --border-strong:  rgba(80, 50, 20, 0.28);
+
+  --font-display:   Georgia, 'Times New Roman', serif;
+  --font-body:      'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
+
+    --color-calendar-100: oklch(96.2% 0.044 156.743);
+    --color-calendar-300: oklch(87.1% 0.15 154.449);
+    --color-caledar-500: oklch(72.3% 0.219 149.579);
+    --color-calendar-700: oklch(52.7% 0.154 150.069);
+
+  /* Diagonal hatch background lines */
+  --bg-texture: repeating-linear-gradient(
+    38deg,
+    transparent,
+    transparent 14px,
+    rgba(80, 50, 20, 0.045) 14px,
+    rgba(80, 50, 20, 0.045) 15px
+  );
+}
+
+/*Theme: Blueprint*/
+[data-theme="blueprint"] {
+  --bg-page:        #EBF2F9;
+  --bg-card:        rgba(255, 255, 255, 0.6);
+  --bg-card-hover:  rgba(255, 255, 255, 0.85);
+  --bg-code:        rgba(30, 70, 120, 0.07);
+
+  --text-primary:   #1A3A5C;
+  --text-secondary: #2C5F8A;
+  --text-muted:     #5A88AA;
+  --text-on-accent: #EBF2F9;
+
+  --accent:         #2C5F8A;
+  --accent-soft:    rgba(44, 95, 138, 0.12);
+  --tag-green:      #2C5F8A;
+  --tag-green-soft: rgba(44, 95, 138, 0.12);
+
+  --border:         rgba(30, 70, 120, 0.15);
+  --border-strong:  rgba(30, 70, 120, 0.35);
+
+  --font-display:   'Courier New', Courier, monospace;
+  --font-body:      'Courier New', Courier, monospace;
+  --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Grid paper lines */
+  --bg-texture:
+    linear-gradient(rgba(30, 70, 120, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 70, 120, 0.08) 1px, transparent 1px);
+  --bg-texture-size: 20px 20px;
+}
+
+/* Theme: Dark Chalkboard */
+[data-theme="chalkboard"] {
+  --bg-page:        #1E1E18;
+  --bg-card:        rgba(255, 255, 220, 0.04);
+  --bg-card-hover:  rgba(255, 255, 220, 0.08);
+  --bg-code:        rgba(255, 255, 220, 0.07);
+
+  --text-primary:   #F0ECC0;
+  --text-secondary: #B8B480;
+  --text-muted:     #7A7550;
+  --text-on-accent: #1E1E18;
+
+  --accent:         #9ED98F;
+  --accent-soft:    rgba(110, 170, 100, 0.2);
+  --tag-green:      #9ED98F;
+  --tag-green-soft: rgba(110, 170, 100, 0.15);
+
+  --border:         rgba(255, 255, 220, 0.1);
+  --border-strong:  rgba(255, 255, 220, 0.22);
+
+  --font-display:   Georgia, 'Times New Roman', serif;
+  --font-body:      'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Dot grid */
+  --bg-texture: radial-gradient(
+    circle,
+    rgba(255, 255, 220, 0.07) 1px,
+    transparent 1px
+  );
+  --bg-texture-size: 18px 18px;
+}
+
+/* Global base styles */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-page);
+  background-image: var(--bg-texture);
+  background-size: var(--bg-texture-size, auto);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+h1 { font-size: 2rem;   font-weight: 700; }
+h2 { font-size: 1.5rem; font-weight: 700; }
+h3 { font-size: 1.2rem; font-weight: 600; }
+
+p  { color: var(--text-secondary); line-height: 1.7; }
+
+a  {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  background: var(--bg-code);
+  color: var(--text-primary);
+  border-radius: 4px;
+}
+code  { padding: 2px 6px; }
+pre   { padding: 1rem; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+
+/* Card */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+}
+
+/* Tag- pill*/
+.tag {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tag-green {
+  background: var(--tag-green-soft);
+  color: var(--tag-green);
+}
+
+/* Blueprint: square tags */
+[data-theme="blueprint"] .tag,
+[data-theme="blueprint"] .tag-green {
+  border-radius: 2px;
+  border: 1.5px solid currentColor;
+  background: transparent;
+  font-family: var(--font-mono);
+}
+
+/* Divider*/
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+/* Nav*/
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--text-primary); text-decoration: none; }
+.nav-link.active { color: var(--accent); }
+
+
+
+.comment-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.dot {
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
 }

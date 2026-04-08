@@ -4,10 +4,16 @@
 	import { supabase } from '$lib/supabase.js';
 	import { invalidateAll } from '$app/navigation';
 	import { redirect } from '@sveltejs/kit';
+	const themes = ['warm', 'chalkboard', 'blueprint'];
+	let theme = $state('warm');
 
+	$effect(() => {
+		document.documentElement.setAttribute('data-theme', theme);
+	});
 	let { children, data } = $props();
 	let error_message = $state('');
 	let sidebar = $state(false);
+
 	async function logout() {
 		const { error } = await supabase.auth.signOut();
 
@@ -23,18 +29,23 @@
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 <nav class="grid grid-cols-3 items-center p-4">
 	<div></div>
-	<div class="flex flex-row justify-center gap-x-8">
+	<div class="flex flex-row justify-center gap-x-8 text-2xl">
 		<a href="/">Home</a>
 		<a href="/explore">Explore</a>
 		<a href="/create">Create</a>
 		{#if data.user?.id}
-			<a href="/info">Community</a>
+			<a href="/community">Community</a>
 		{:else}
 			<a href="/info">Info</a>
 		{/if}
 	</div>
 
 	<div class="flex justify-end pr-10">
+		<select bind:value={theme}>
+			{#each themes as t}
+				<option value={t}>{t}</option>
+			{/each}
+		</select>
 		{#if !data.user}
 			<a href="/auth/signup" class="rounded-2xl bg-green-400 p-2">Signup</a>
 		{:else}

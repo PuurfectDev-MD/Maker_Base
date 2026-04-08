@@ -21,8 +21,6 @@
 	}
 </script>
 
-<h1>This is the login page</h1>
-
 <div class="flex flex-row justify-center gap-y-4">
 	<form onsubmit={login_with_email} class="pt-20 md:pt-10">
 		<div class="flex gap-x-5 p-4">

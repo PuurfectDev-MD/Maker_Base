@@ -26,8 +26,8 @@
 {#await dotFetchPromise}
 	<p>Loading dots</p>
 {:then result}
-	<div class="flex w-full max-w-full flex-col bg-amber-500">
-		<div class="flex flex-row justify-end gap-x-3 p-4">
+	<div class="dot flex w-full max-w-full flex-col pr-8">
+		<div class="flex flex-row justify-end p-2 pr-8">
 			<button
 				class="cursor-pointer px-3 py-2 hover:scale-110 hover:bg-red-500 {dotted
 					? `bg-yellow-400`
