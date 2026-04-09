@@ -207,11 +207,12 @@ pre   { padding: 1rem; overflow-x: auto; border: 1px solid var(--border); border
   font-family: var(--font-mono);
 }
 
-/* Divider*/
+
 hr {
   border: none;
   border-top: 1px solid var(--border);
   margin: 1.5rem 0;
+  margin-top: 4rem;
 }
 
 /* Nav*/
@@ -238,6 +239,25 @@ hr {
   border-radius: 8px;
 }
 
+
+button {
+    background-color: var(--accent);
+    color: var(--text-on-accent);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 3px 12px;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+button:hover{
+    opacity: 0.88;
+}
+
+
+.floating-menu button{
+    background-color: transparent;
+     color: var(--text-muted);
+}
 .input-title {
   background: transparent;
   border: none;
@@ -251,14 +271,16 @@ hr {
   outline: none;
 }
 
-.input-title:focus {
-  border-bottom-color: var(--accent);
-}
 .input-title::placeholder {
   color: var(--text-muted);
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 1.2rem;
 }
 
+.input-description{
+    color: var(--text-muted);
+    font-weight: 300;
+}
 .input-description{
     background: transparent;
     border: none;
@@ -270,4 +292,16 @@ hr {
     font-size: 1.2rem;
     font-weight: 400;
 
+}
+
+.editor{
+    background-color: var(--bg-page);
+}
+
+.tiptap{
+    background-color: var(--bg-card);
+}
+
+.main h1{
+    font-size: 4rem;
 }
