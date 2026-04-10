@@ -2,14 +2,9 @@ import { getRequestEvent } from "$app/server";
 
 
 export async function load({ locals }) {
-    const result = await getUserSetup(locals.user.id)
+    const resultPromise = getUserSetup(locals.user.id)
 
-    if (result.type !== 'success') {
-        console.log(result.message)
-        return { type: result.type, message: result.message }
-    }
-
-    return { userInfoFetch: result.type, posts: result.posts, count: result.totalCount }
+    return { result: resultPromise }
 }
 async function getUserSetup(userid: string) {
     let event = getRequestEvent()
