@@ -59,7 +59,7 @@
 			<button class="cursor-pointer p-3" onclick={() => (sidebar = !sidebar)}>User</button>
 			{#if sidebar}
 				<div
-					class="absolute top-[10vh] right-10 flex flex-col gap-y-2 bg-amber-400 p-4"
+					class="absolute top-[10vh] right-10 flex flex-col gap-y-2 bg-[var(--bg-card)] p-4"
 					onmouseleave={() => (sidebar = !sidebar)}
 				>
 					<a href="/about">You</a>

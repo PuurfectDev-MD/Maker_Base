@@ -11,9 +11,9 @@
     --color-calendar-700: oklch(52.7% 0.154 150.069);
 } */
 
-
 *, *::before, *::after {
   box-sizing: border-box;
+    /* outline: 1px solid red !important; */
 }
 
 /* Theme: Warm Ivory */
@@ -193,10 +193,6 @@ pre   { padding: 1rem; overflow-x: auto; border: 1px solid var(--border); border
   text-transform: uppercase;
 }
 
-.tag-green {
-  background: var(--tag-green-soft);
-  color: var(--tag-green);
-}
 
 /* Blueprint: square tags */
 [data-theme="blueprint"] .tag,

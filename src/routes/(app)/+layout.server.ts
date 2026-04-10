@@ -19,7 +19,7 @@ export async function load({ locals }) {
 }
 
 
-async function getPostCountPerMonth(author_id: string) {
+async function getPostCountPerMonth(author_id: string) {  // this is for the user line graph
     const event = getRequestEvent()
     const user_id = event.locals.user.id
     if (user_id !== author_id) {
@@ -46,7 +46,7 @@ async function getPostCountPerMonth(author_id: string) {
     return { type: "success", data: result }
 }
 
-async function getPostPerDay(author_id: string) {
+async function getPostPerDay(author_id: string) { // this is for the user calendar chart
     const event = getRequestEvent()
     const user = event.locals.user.id
 
