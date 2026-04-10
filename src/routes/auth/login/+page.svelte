@@ -24,25 +24,24 @@
 <div class="flex flex-row justify-center gap-y-4">
 	<form onsubmit={login_with_email} class="pt-20 md:pt-10">
 		<div class="flex gap-x-5 p-4">
-			<h1 class="text-2xl font-bold md:text-3xl">Login >></h1>
-			<h2 class="pt-1 text-2xl">To get back at your space</h2>
+			<h1 class="text-2xl font-bold md:text-3xl">Login</h1>
 		</div>
 		<div class="row p-4">
 			<label>
 				Email:
-				<input class="ml-4 text-black" required type="email" name="email" />
+				<input class="input-form ml-4 text-black" required type="email" name="email" />
 			</label>
 		</div>
 
 		<div class="row p-4">
 			<label>
 				Password:
-				<input class="ml-4 text-black" required type="password" name="password" />
+				<input class="input-form ml-4 text-black" required type="password" name="password" />
 			</label>
 		</div>
 		<button
 			type="submit"
-			class="mt-12 ml-[33%] cursor-pointer rounded-xl bg-green-200 p-4 text-black md:mt-8 md:ml-0"
+			class="rounded-x mt-12 ml-[33%] cursor-pointer p-4 text-black md:mt-8 md:ml-0"
 		>
 			Login</button
 		>
@@ -51,7 +50,7 @@
 
 <div class="bottom-0 mt-10 flex flex-row justify-center gap-x-10 p-8">
 	<h1 class="p-3">Dont have an account?</h1>
-	<a href="/auth/signup" class="rounded-2xl p-3 hover:bg-amber-200 hover:text-black">Signup</a>
+	<a href="/auth/signup" class="rounded-2xl border-2 border-r-4 p-3 no-underline!"> Signup</a>
 </div>
 
 {#if error_message}

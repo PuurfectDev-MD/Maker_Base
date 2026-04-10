@@ -37,52 +37,53 @@
 </script>
 
 <div class="flex flex-row justify-center gap-y-4">
-	<form onsubmit={signup} class="px-10 pt-20 pb-20 md:pt-10">
+	<form onsubmit={signup} class="px-10 pt-20 pb-10 md:pt-10">
 		<div class="flex gap-x-5 p-4">
-			<h1 class="text-2xl font-bold md:text-3xl">Signup >></h1>
-			<h2 class="pt-1 text-2xl">To begin your quest!</h2>
+			<h1 class="text-2xl font-bold md:text-3xl">Signup</h1>
 		</div>
 
 		<div class="row p-4">
 			<label>
 				Username:
-				<input class="ml-4 text-black" required type="text" name="username" />
+				<input class="input-form ml-4 text-black" required type="text" name="username" />
 			</label>
 		</div>
 		<div class="row p-4">
 			<label>
 				Email:
-				<input class="ml-4 text-black" required type="email" name="email" />
+				<input class="input-form ml-4 text-black" required type="email" name="email" />
 			</label>
 		</div>
 
 		<div class="row p-4">
 			<label>
 				Password:
-				<input class="ml-4 text-black" required type="password" name="password" />
+				<input class="input-form ml-4 text-black" required type="password" name="password" />
 			</label>
 		</div>
 		<div class="row p-4">
 			<label>
-				Confirm Passowrd:
-				<input class="ml-4 text-black" required type="password" name="password_confirm" />
+				Confirm Password:
+				<input
+					class="input-form ml-4 text-black"
+					required
+					type="password"
+					name="password_confirm"
+				/>
 			</label>
 		</div>
-		<div class="avatar_select">
+		<div class="avatar_select hidden">
 			<input name="avatar_selection" />
 		</div>
-		<button
-			type="submit"
-			class="mt-12 ml-[33%] rounded-xl bg-green-200 p-4 text-black md:mt-8 md:ml-0"
-		>
+		<button type="submit" class="mt-12 ml-[33%] rounded-xl px-4 text-black md:mt-8 md:ml-0">
 			Signup</button
 		>
 	</form>
 </div>
 
-<div class="flex flex-row justify-center gap-x-4 p-8">
+<div class="flex flex-row justify-center gap-x-4">
 	<h2 class="p-3">Alteady Have an account?</h2>
-	<a href="/auth/login" class="rounded-2xl bg-amber-300 p-3"> Login</a>
+	<a href="/auth/login" class="rounded-2xl border-2 border-r-4 p-3 no-underline!"> Login</a>
 </div>
 
 {#if error_message}

@@ -40,17 +40,21 @@
 		{/if}
 	</div>
 
-	<div class="flex justify-end pr-10">
+	<div class="flex justify-end gap-x-3.5">
 		<select
 			bind:value={theme}
-			class=" appearance-none border-0 border-b-2 border-black bg-transparent py-2 pr-8 outline-none focus:border-white focus:ring-0"
+			class=" appearance-none border-0 border-b-2 border-black bg-[var(--bg-card)] pr-10 outline-none"
 		>
 			{#each themes as t}
-				<option value={t}>{t}</option>
+				<option value={t} class="p-2 text-center">{t}</option>
 			{/each}
 		</select>
 		{#if !data.user}
-			<a href="/auth/signup" class="rounded-2xl bg-green-400 p-2">Signup</a>
+			<a
+				href="/auth/signup"
+				class=" rounded-[4px] border border-[var(--primary-color)] px-3 py-2 no-underline! hover:bg-[var(--bg-card)]"
+				>Signup</a
+			>
 		{:else}
 			<button class="cursor-pointer p-3" onclick={() => (sidebar = !sidebar)}>User</button>
 			{#if sidebar}
