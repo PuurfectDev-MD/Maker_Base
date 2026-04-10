@@ -19,7 +19,12 @@ export const handle: Handle = async ({ event, resolve }) => {
     event.locals.session = (await event.locals.supabase.auth.getSession()).data.session
     event.locals.user = user ?? null
 
-    return resolve(event)
+    const theme = event.cookies.get('user-theme') || 'warm';
+
+    return resolve(event, {
+        transformPageChunk: ({ html }) =>
+            html.replace('data-theme=""', `data-theme="${theme}"`)
+    })
 }
 
 

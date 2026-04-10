@@ -4,13 +4,19 @@
 	import { supabase } from '$lib/supabase.js';
 	import { invalidateAll } from '$app/navigation';
 	import { redirect } from '@sveltejs/kit';
-	const themes = ['warm', 'chalkboard', 'blueprint'];
-	let theme = $state('warm');
 
+	let { children, data } = $props();
+	const themes = ['warm', 'chalkboard', 'blueprint'];
+	let theme = $state(data.theme || 'warm');
+
+	async function saveTheme(newTheme: string) {
+		document.cookie = `user-theme=${newTheme}; path=/; max-age=31536000; SameSite=Lax`;
+		await invalidateAll();
+	}
 	$effect(() => {
 		document.documentElement.setAttribute('data-theme', theme);
 	});
-	let { children, data } = $props();
+
 	let error_message = $state('');
 	let sidebar = $state(false);
 
@@ -43,6 +49,9 @@
 	<div class="flex justify-end gap-x-3.5">
 		<select
 			bind:value={theme}
+			onchange={(e) => {
+				saveTheme(e.currentTarget.value);
+			}}
 			class=" appearance-none border-0 border-b-2 border-black bg-[var(--bg-card)] pr-10 outline-none"
 		>
 			{#each themes as t}
