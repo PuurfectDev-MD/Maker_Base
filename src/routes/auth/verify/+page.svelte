@@ -12,5 +12,5 @@
 	});
 </script>
 
-<h1 class="text-3xl text-white">Go check your email</h1>
-<p>verifying</p>
+<h1 class="text-3xl text-white">Your email is verified</h1>
+<p>Preparing your workspace</p>
