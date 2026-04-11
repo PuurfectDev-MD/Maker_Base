@@ -55,9 +55,9 @@
 		<h1>Type anything & Everything ...</h1>
 		<p class="pt-4 pr-4">
 			Your imagination is your limit. You can document how to start a sveltekit project, how to
-			detect objects using rassbery pi camera, how to fix latency issues in remote functions, and so
-			and so fourth. Your ideas/note will be show to the community and youll recieve alot of dots if
-			it is helpful!
+			detect objects using Raspberry pi camera, how to fix latency issues in remote functions, and
+			so and so fourth. Your ideas/note will be show to the community and youll recieve alot of dots
+			if it is helpful!
 		</p>
 	</div>
 </div>
