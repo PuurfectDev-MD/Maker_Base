@@ -2,15 +2,10 @@ import { supabase } from "$lib/supabase"
 
 
 export async function load() {
-    const response = await explorePosts()
-    if (response.type == "success") {
-        return {
-            posts: response.result
-        }
-    }
+    const responsePromise = explorePosts()
 
     return {
-        error: response.message
+        posts: responsePromise
     }
 }
 

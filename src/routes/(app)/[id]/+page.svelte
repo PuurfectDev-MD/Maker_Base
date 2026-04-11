@@ -1,6 +1,6 @@
 <script lang="ts">
 	import HomeSkeleton from '$lib/components/HomeSkeleton.svelte';
-
+	import { PlusIcon } from 'phosphor-svelte';
 	let { data } = $props();
 </script>
 
@@ -45,7 +45,7 @@
 					href="/create"
 					class="rounded-sm border border-[var(--primary-color)] px-4 py-2 transition-colors hover:bg-[var(--bg-page)] hover:no-underline!"
 				>
-					Create
+					<PlusIcon size={24} />
 				</a>
 			</div>
 		</div>

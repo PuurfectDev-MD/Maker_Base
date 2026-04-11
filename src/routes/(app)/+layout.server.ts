@@ -7,13 +7,13 @@ export async function load({ locals }) {
         redirect(303, "/auth/signup")
     }
 
-    const resultForPost = await getPostCountPerMonth(locals.user.id)
-    const postPerDayData = await getPostPerDay(locals.user.id)
+    const postPerMonthPromise = getPostCountPerMonth(locals.user.id)
+    const postPerDayPromise = getPostPerDay(locals.user.id)
 
     return {
         user: locals.user,
-        postsPerMonth: resultForPost.type == "success" ? resultForPost.data : {},
-        postsPerDay: postPerDayData?.type == "success" ? postPerDayData?.PostData : {}
+        postsPerMonth: postPerMonthPromise,
+        postsPerDay: postPerDayPromise
 
     }
 }

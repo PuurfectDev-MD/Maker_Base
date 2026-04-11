@@ -5,6 +5,8 @@
 	import { invalidateAll } from '$app/navigation';
 	import { redirect } from '@sveltejs/kit';
 
+	import { UserIcon } from 'phosphor-svelte';
+
 	let { children, data } = $props();
 	const themes = ['warm', 'chalkboard', 'blueprint'];
 	let theme = $state(data.theme || 'warm');
@@ -65,7 +67,9 @@
 				>Signup</a
 			>
 		{:else}
-			<button class="cursor-pointer p-3" onclick={() => (sidebar = !sidebar)}>User</button>
+			<button class="cursor-pointer p-3" onclick={() => (sidebar = !sidebar)}
+				><UserIcon size={24} /></button
+			>
 			{#if sidebar}
 				<div
 					class="absolute top-[10vh] right-10 flex flex-col gap-y-2 bg-[var(--bg-card)] p-4"
@@ -79,4 +83,6 @@
 		{/if}
 	</div>
 </nav>
-{@render children()}
+<main class="w-full max-w-full overflow-x-hidden px-4">
+	{@render children()}
+</main>

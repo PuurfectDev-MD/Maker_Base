@@ -5,34 +5,44 @@
 
 	import CalendarActivity from './CalendarActivity.svelte';
 	let { data } = $props();
-	let mounted = $state(false);
-	onMount(() => (mounted = true));
-	const chartData = $derived(data.postsPerMonth);
-	const calenderData = data.postsPerDay;
+	import AboutSkeleton from '$lib/components/AboutSkeleton.svelte';
 </script>
 
-<div class="grid max-h-[80%] grid-cols-2">
+<div class="my-5 grid grid-cols-2">
 	<div>
 		<img src="/images/image.png" class="w-fit p-3" />
 	</div>
 
-	<div class="flex flex-col justify-start gap-y-6 bg-red-400 p-4 pt-10">
+	<div class="card jusitfy-center flex flex-col">
 		<h1>Username: {data.user.user_metadata.username}</h1>
 		<h1>Email: {data.user.email}</h1>
-		<h1>Email: {data.user.email}</h1>
-		<h1>Email: {data.user.email}</h1>
+		<h1>Number of posts: ____</h1>
+		<h1>Number of dots: _____</h1>
+		<h1>Account create at: _____</h1>
 	</div>
 </div>
+{#await data.postsPerMonth}
+	<AboutSkeleton showChart={true} />
+{:then chartData}
+	<div
+		style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem;"
+	>
+		<LineChart
+			data={chartData.data}
+			x="date"
+			y="value"
+			padding={defaultChartPadding({ right: 10 })}
+			height={300}
+		/>
+	</div>
+{/await}
 
-{#if mounted}
-	<LineChart
-		class="mt-5 bg-white p-4 text-black"
-		data={chartData}
-		x="date"
-		y="value"
-		padding={defaultChartPadding({ right: 10 })}
-		height={300}
-	/>
-{/if}
-
-<CalendarActivity data={calenderData}></CalendarActivity>
+{#await data.postsPerDay}
+	<AboutSkeleton showCalendar={true} />
+{:then calendarData}
+	<div
+		style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-top: 1.5rem;"
+	>
+		<CalendarActivity data={calendarData?.PostData} />
+	</div>
+{/await}

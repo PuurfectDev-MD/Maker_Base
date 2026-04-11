@@ -1,24 +1,13 @@
 <script lang="ts">
-	let { Maxwidth = 150, height = '1rem', count = 1 } = $props();
-	function getWidth(i: number) {
-		if (i > 1) {
-			if (i % 3 === 0) return Maxwidth * 0.85;
-			if (i % 2 === 0) return Maxwidth * 0.7;
-			return Maxwidth * 0.9;
-		}
-		return i;
-	}
+	let { width = '100%', height = '1rem', class: className = '' } = $props();
 </script>
 
-{#each Array(count) as _}
-	<div style="width:{getWidth(Maxwidth)}px; height: {height}" class="skeleton"></div>
-{/each}
+<div class="skeleton {className}" style="width:{width}; height:{height}"></div>
 
 <style>
 	.skeleton {
-		box-sizing: border-box;
-		margin-top: 0.75rem;
 		border-radius: 4px;
+		margin-top: 0.75rem;
 		background: linear-gradient(
 			90deg,
 			var(--accent-soft) 25%,

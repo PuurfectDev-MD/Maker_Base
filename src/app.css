@@ -41,11 +41,10 @@
   --font-body:      'IBM Plex Sans', system-ui, sans-serif;
   --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
 
-    --color-calendar-100: oklch(96.2% 0.044 156.743);
-    --color-calendar-300: oklch(87.1% 0.15 154.449);
-    --color-caledar-500: oklch(72.3% 0.219 149.579);
-    --color-calendar-700: oklch(52.7% 0.154 150.069);
-
+     --color-calendar-100: rgba(196, 128, 58, 0.15);
+  --color-calendar-300: rgba(196, 128, 58, 0.35);
+  --color-calendar-500: rgba(196, 128, 58, 0.65);
+  --color-calendar-700: rgba(196, 128, 58, 0.9);
   /* Diagonal hatch background lines */
   --bg-texture: repeating-linear-gradient(
     38deg,
@@ -80,6 +79,11 @@
   --font-body:      'Courier New', Courier, monospace;
   --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
 
+    --color-calendar-100: rgba(44, 95, 138, 0.15);
+  --color-calendar-300: rgba(44, 95, 138, 0.35);
+  --color-calendar-500: rgba(44, 95, 138, 0.65);
+  --color-calendar-700: rgba(44, 95, 138, 0.9);
+
   /* Grid paper lines */
   --bg-texture:
     linear-gradient(rgba(30, 70, 120, 0.08) 1px, transparent 1px),
@@ -111,6 +115,11 @@
   --font-body:      'IBM Plex Sans', system-ui, sans-serif;
   --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
 
+    --color-calendar-100: rgba(158, 217, 143, 0.15);
+  --color-calendar-300: rgba(158, 217, 143, 0.35);
+  --color-calendar-500: rgba(158, 217, 143, 0.65);
+  --color-calendar-700: rgba(158, 217, 143, 0.9);
+  
   /* Dot grid */
   --bg-texture: radial-gradient(
     circle,
@@ -124,7 +133,10 @@
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
 }
+
+
 
 body {
   background-color: var(--bg-page);
@@ -166,6 +178,39 @@ code, pre, kbd {
 code  { padding: 2px 6px; }
 pre   { padding: 1rem; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
 
+:global(.prose) {
+    background-color: transparent !important;
+    max-width: 100% !important;
+}
+:global(.tiptap) {
+    background-color: transparent !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+:global(.tiptap p),
+:global(.tiptap h1),
+:global(.tiptap h2),
+:global(.tiptap h3),
+:global(.tiptap pre),
+:global(.tiptap code) {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap; 
+}
+
+
+.editor {
+    padding: 4px;
+    background-color: transparent !important;
+}
+
+.editor li{
+  color: var(--text-secondary);
+}
 /* Card */
 .card {
   background: var(--bg-card);
@@ -245,6 +290,13 @@ button {
     transition: opacity 0.15s ease, background-color 0.15s ease;
 }
 
+
+.option-menu button{
+  background-color: var(--accent);
+  padding: 4px 6px !important;
+  border-radius: 8px;
+  cursor: pointer;
+}
 button:hover{
     opacity: 0.88;
 }
@@ -303,13 +355,6 @@ button:hover{
   font-weight: 700;
 }
 
-.editor{
-    background-color: var(--bg-page);
-}
-
-.tiptap{
-    background-color: var(--bg-card);
-}
 
 .main h1{
     font-size: 4rem;

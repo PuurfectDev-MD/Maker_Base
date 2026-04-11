@@ -33,30 +33,25 @@
 	<div class="h-px flex-grow bg-[var(--accent)]"></div>
 </div>
 
-<div class="-z-index-5 mt-8 flex grow flex-row gap-x-4 p-4 opacity-50">
-	<div class="card">
-		<h1>TFT Screens - OLED vs TFT</h1>
-		<Skeleton Maxwidth={400} height="1.5rem" count={3}></Skeleton>
-	</div>
-
-	<div class="card">
-		<h1>How to boost converter</h1>
-		<Skeleton Maxwidth={400} height="1.5rem" count={3}></Skeleton>
-	</div>
-
-	<div class="card">
-		<h1>Supabase + Svelte Kit</h1>
-		<Skeleton Maxwidth={400} height="1.5rem" count={3}></Skeleton>
-	</div>
+<div class="mt-8 flex grow flex-row gap-x-4 p-4 opacity-50">
+	{#each Array(3) as _}
+		<div class="card flex-1">
+			<Skeleton width="70%" height="1.5rem" />
+			<Skeleton width="100%" height="1.5rem" />
+			<Skeleton width="85%" height="1.5rem" />
+			<Skeleton width="90%" height="1.5rem" />
+		</div>
+	{/each}
 </div>
-
-<div class="mt-4 flex items-center justify-center p-4">
-	<div class="flex w-full max-w-[600px] flex-1 flex-col pt-5">
-		<Skeleton Maxwidth={800} height="4rem"></Skeleton>
-		<Skeleton Maxwidth={800} height="20rem"></Skeleton>
+<div class="mt-4 flex flex-row gap-x-8 p-4">
+	<!-- Left -->
+	<div class="flex flex-1 flex-col pt-5">
+		<Skeleton width="100%" height="4rem" />
+		<Skeleton width="100%" height="20rem" />
 	</div>
 
-	<div class="inset-0 flex max-w-[50%] flex-col px-8">
+	<!-- Right-->
+	<div class=" flex flex-1 flex-col justify-center px-8">
 		<h1>Type anything & Everything ...</h1>
 		<p class="pt-4 pr-4">
 			Your imagination is your limit. You can document how to start a sveltekit project, how to
@@ -66,7 +61,6 @@
 		</p>
 	</div>
 </div>
-
 <div class="mt-16 flex items-center gap-3 pt-4">
 	<div class="h-px flex-grow bg-[var(--accent)]"></div>
 	<p class="shrink-0 text-sm text-[var(--text-muted)]">Why use it?</p>
