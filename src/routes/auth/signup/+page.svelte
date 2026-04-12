@@ -79,8 +79,8 @@
 	</form>
 </div>
 
-<div class="flex flex-row justify-center gap-x-4">
-	<h2 class="p-3">Alteady Have an account?</h2>
+<div class="flex justify-center gap-x-2 md:gap-x-4">
+	<h2 class="p-3">Already Have an account?</h2>
 	<a href="/auth/login" class="rounded-2xl border-2 border-r-4 p-3 no-underline!"> Login</a>
 </div>
 
