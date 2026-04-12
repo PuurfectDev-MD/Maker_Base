@@ -31,8 +31,6 @@
 			error_message = signupError.message;
 			return;
 		}
-
-		window.location.href = `/auth/verify`;
 	}
 </script>
 
@@ -98,7 +96,7 @@
 	<div
 		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
 	>
-		<p class="px-8 py-4 text-xl md:text-2xl">Creating your place :)</p>
+		<p class="px-8 py-4 text-xl md:text-2xl">Check your email :)</p>
 	</div>
 {/if}
 
