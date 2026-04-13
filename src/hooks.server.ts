@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import type { Handle } from '@sveltejs/kit'
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public'
-import { supabase } from '$lib/supabase'
+
 
 
 
@@ -15,9 +15,11 @@ export const handle: Handle = async ({ event, resolve }) => {
         }
     })
 
-    const { data: { user } } = await event.locals.supabase.auth.getUser()
-    event.locals.session = (await event.locals.supabase.auth.getSession()).data.session
-    event.locals.user = user ?? null
+    const { data: { session } } = await event.locals.supabase.auth.getSession()
+
+    event.locals.session = session
+    event.locals.user = session?.user ?? null
+
 
     const theme = event.cookies.get('user-theme') || 'warm';
 

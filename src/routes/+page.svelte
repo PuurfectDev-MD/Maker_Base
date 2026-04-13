@@ -2,9 +2,12 @@
 	import Skeleton from '$lib/components/Skeleton.svelte';
 </script>
 
-<div class="main mt-20 flex flex-col items-center">
-	<h1>Your Maker Stuff,</h1>
-	<h1>Documented for forever</h1>
+<div class="main mt-10 flex w-screen flex-col items-center md:mt-20">
+	<h1 class="hidden text-3xl md:block md:text-5xl">Your Maker Stuff,</h1>
+	<h1 class="block text-3xl md:hidden md:text-5xl">Creation,</h1>
+	<h1 class="block text-3xl md:hidden md:text-5xl">& Ideas</h1>
+	<h1 class="block text-3xl md:hidden md:text-5xl">for forever</h1>
+	<h1 class="hidden text-3xl md:block md:text-5xl">Documented for forever</h1>
 
 	<p class="mt-8 max-w-md text-center">
 		Write, explore detailed notes and revist components, concepts, how-to-do-expanations all at one
@@ -43,22 +46,24 @@
 		</div>
 	{/each}
 </div>
-<div class="mt-4 flex flex-row gap-x-8 p-4">
-	<!-- Left -->
-	<div class="flex flex-1 flex-col pt-5">
-		<Skeleton width="100%" height="4rem" />
-		<Skeleton width="100%" height="20rem" />
-	</div>
-
+<div class="mt-4 flex flex-col gap-x-8 p-4 md:flex-row">
 	<!-- Right-->
 	<div class=" flex flex-1 flex-col justify-center px-8">
 		<h1>Type anything & Everything ...</h1>
-		<p class="pt-4 pr-4">
-			Your imagination is your limit. You can document how to start a sveltekit project, how to
+		<p class="hidden pt-4 pr-4 md:block">
+			Your imagination is the limit. You can document how to start a sveltekit project, how to
 			detect objects using Raspberry pi camera, how to fix latency issues in remote functions, and
 			so and so fourth. Your ideas/note will be show to the community and youll recieve alot of dots
 			if it is helpful!
 		</p>
+
+		<p class=" block pt-4 pr-4 md:hidden">Your imagination is the limit</p>
+	</div>
+
+	<!-- Left -->
+	<div class="flex flex-1 flex-col pt-5">
+		<Skeleton width="100%" height="4rem" />
+		<Skeleton width="100%" height="20rem" />
 	</div>
 </div>
 <div class="mt-16 flex items-center gap-3 pt-4">
@@ -67,7 +72,7 @@
 	<div class="h-px flex-grow bg-[var(--accent)]"></div>
 </div>
 
-<div class="hover:none mt-8 flex flex-row justify-evenly p-4">
+<div class="hover:none mt-8 flex flex-col justify-evenly gap-y-4 p-4 md:flex-row">
 	<div class="card max-w-[400px]">
 		<h1>Write it once</h1>
 		<p class="pt-3">
