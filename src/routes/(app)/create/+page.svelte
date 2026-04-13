@@ -18,7 +18,6 @@
 	let isItalic = $state(false);
 	let isCode = $state(false);
 
-	// slash menu state
 	let slashMenuVisible = $state(false);
 	let slashMenuX = $state(0);
 	let slashMenuY = $state(0);
@@ -29,68 +28,106 @@
 		{
 			name: 'Headings',
 			items: [
-				{
-					label: 'Heading 1',
-					icon: 'H1',
-					action: (e: BlockNoteEditor) =>
-						e.updateBlock(e.getTextCursorPosition().block, { type: 'heading', props: { level: 1 } })
-				},
-				{
-					label: 'Heading 2',
-					icon: 'H2',
-					action: (e: BlockNoteEditor) =>
-						e.updateBlock(e.getTextCursorPosition().block, { type: 'heading', props: { level: 2 } })
-				},
-				{
-					label: 'Heading 3',
-					icon: 'H3',
-					action: (e: BlockNoteEditor) =>
-						e.updateBlock(e.getTextCursorPosition().block, { type: 'heading', props: { level: 3 } })
-				}
+				{ label: 'Heading 1', icon: 'H1', type: 'heading', props: { level: 1 } },
+				{ label: 'Heading 2', icon: 'H2', type: 'heading', props: { level: 2 } },
+				{ label: 'Heading 3', icon: 'H3', type: 'heading', props: { level: 3 } }
 			]
 		},
-
 		{
 			name: 'Basic Blocks',
 			items: [
-				{
-					label: 'Bullet List',
-					icon: '•',
-					action: (e: BlockNoteEditor) =>
-						e.updateBlock(e.getTextCursorPosition().block, { type: 'bulletListItem' })
-				},
-				{
-					label: 'Numbered List',
-					icon: '1.',
-					action: (e: BlockNoteEditor) =>
-						e.updateBlock(e.getTextCursorPosition().block, { type: 'numberedListItem' })
-				},
-				{
-					label: 'Paragraph',
-					icon: '¶',
-					action: (e: BlockNoteEditor) =>
-						e.updateBlock(e.getTextCursorPosition().block, { type: 'paragraph' })
-				},
-				{
-					label: 'Image',
-					icon: '🖼',
-					action: (e: BlockNoteEditor) =>
-						e.updateBlock(e.getTextCursorPosition().block, { type: 'image' })
-				}
+				{ label: 'Bullet List', icon: '•', type: 'bulletListItem' },
+				{ label: 'Numbered List', icon: '1.', type: 'numberedListItem' },
+				{ label: 'Paragraph', icon: '¶', type: 'paragraph' }
 			]
 		}
 	];
 
-	let filteredItems = allItems
-		.map((group) => ({
-			name: group.name,
-			items: group.items.filter((item) =>
-				item.label.toLowerCase().includes(slashQuery.toLowerCase())
-			)
-		}))
-		.filter((group) => group.items.length > 0);
+	let filteredItems = $derived(
+		allItems
+			.map((group) => ({
+				name: group.name,
+				items: group.items.filter((item) =>
+					item.label.toLowerCase().includes(slashQuery.toLowerCase())
+				)
+			}))
+			.filter((group) => group.items.length > 0)
+	);
 
-	let flatItems = filteredItems.flatMap((g) => g.items);
+	let flatItems = $derived(filteredItems.flatMap((g) => g.items));
+
+	$effect(() => {
+		slashQuery;
+		selectedIndex = 0;
+	});
+
+	function getBlockText(block: any): string {
+		if (typeof block.content === 'string') return block.content;
+		if (!Array.isArray(block.content)) return '';
+		return block.content.map((c: any) => (c.type === 'text' ? c.text : '')).join('');
+	}
+
+	function selectItem(item: any) {
+		const slashPattern = new RegExp(`\\/${slashQuery}`);
+
+		const targetBlock = editor.document.find((b: any) => {
+			const text = getBlockText(b);
+			return slashPattern.test(text) || text.trim().startsWith('/');
+		});
+
+		const block = targetBlock ?? editor.getTextCursorPosition().block;
+		const fullText = getBlockText(block);
+		const cleanedText = fullText.replace(/\/[^\s]*$/, '').trim();
+
+		const emptyContent = [{ type: 'text', text: '', styles: {} }];
+
+		if (cleanedText === '') {
+			editor.updateBlock(block, {
+				type: item.type,
+				props: item.props ?? {},
+				content: emptyContent as any
+			});
+
+			const updated = editor.document.find((b: any) => b.id === block.id);
+			if (updated) editor.setTextCursorPosition(updated, 'start');
+		} else {
+			editor.updateBlock(block, {
+				type: 'paragraph',
+				content: [{ type: 'text', text: cleanedText, styles: {} }] as any
+			});
+
+			const inserted = editor.insertBlocks(
+				[{ type: item.type, props: item.props ?? {}, content: emptyContent as any }],
+				block,
+				'after'
+			);
+
+			const newBlock = editor.document.find((b: any) => b.id === inserted[0]?.id);
+			if (newBlock) editor.setTextCursorPosition(newBlock, 'start');
+		}
+
+		slashMenuVisible = false;
+		slashQuery = '';
+		selectedIndex = 0;
+		editor.focus();
+	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (!slashMenuVisible || flatItems.length === 0) return;
+
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			selectedIndex = (selectedIndex + 1) % flatItems.length;
+		} else if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			selectedIndex = (selectedIndex - 1 + flatItems.length) % flatItems.length;
+		} else if (e.key === 'Enter') {
+			e.preventDefault();
+			selectItem(flatItems[selectedIndex]);
+		} else if (e.key === 'Escape') {
+			slashMenuVisible = false;
+		}
+	}
 
 	async function submitPost() {
 		posting = true;
@@ -114,8 +151,10 @@
 	function setHeading(level: 1 | 2 | 3) {
 		const block = editor.getTextCursorPosition().block;
 		const isAlreadyHeading = block.type === 'heading' && (block.props as any).level === level;
-		if (isAlreadyHeading) editor.updateBlock(block, { type: 'paragraph' });
-		else editor.updateBlock(block, { type: 'heading', props: { level } });
+		editor.updateBlock(
+			block,
+			isAlreadyHeading ? { type: 'paragraph' } : { type: 'heading', props: { level } }
+		);
 	}
 
 	function toggleOrderedList() {
@@ -132,39 +171,6 @@
 		});
 	}
 
-	function selectItem(item: (typeof allItems)[0]['items'][0]) {
-		// remove the /query text first
-		const block = editor.getTextCursorPosition().block;
-		editor.updateBlock(block, {
-			content: (block.content as any[]).filter((c: any) => {
-				if (c.type === 'text') {
-					c.text = c.text.replace(/\/\S*$/, '');
-				}
-				return true;
-			})
-		});
-		item.action(editor);
-		slashMenuVisible = false;
-		slashQuery = '';
-		editor.focus();
-	}
-
-	function handleKeydown(e: KeyboardEvent) {
-		if (!slashMenuVisible) return;
-		if (e.key === 'ArrowDown') {
-			e.preventDefault();
-			selectedIndex = (selectedIndex + 1) % flatItems.length;
-		} else if (e.key === 'ArrowUp') {
-			e.preventDefault();
-			selectedIndex = (selectedIndex - 1 + filteredItems.length) % filteredItems.length;
-		} else if (e.key === 'Enter') {
-			e.preventDefault();
-			if (flatItems[selectedIndex]) selectItem(flatItems[selectedIndex]);
-		} else if (e.key === 'Escape') {
-			slashMenuVisible = false;
-		}
-	}
-
 	onMount(() => {
 		editor = createEditor();
 		editor.mount(container);
@@ -176,31 +182,28 @@
 			isCode = !!styles.code;
 		});
 
-		// watch for slash key
-		container.addEventListener('keyup', (e) => {
+		container.addEventListener('keyup', (e: KeyboardEvent) => {
+			if (['ArrowUp', 'ArrowDown', 'Enter', 'Escape'].includes(e.key)) return;
+
 			const sel = window.getSelection();
 			if (!sel || !sel.rangeCount) return;
 
 			const range = sel.getRangeAt(0);
-			const text = range.startContainer.textContent ?? '';
-			const slashIndex = text.lastIndexOf('/');
+			const textBeforeCursor = range.startContainer.textContent?.slice(0, range.startOffset) ?? '';
+			const match = textBeforeCursor.match(/\/([^\s/]*)$/);
 
-			if (slashIndex !== -1) {
-				slashQuery = text.slice(slashIndex + 1);
-				selectedIndex = 0;
-
-				// position menu near cursor
+			if (match) {
+				slashQuery = match[1];
+				slashMenuVisible = true;
 				const rect = range.getBoundingClientRect();
 				slashMenuX = rect.left;
 				slashMenuY = rect.bottom + window.scrollY + 8;
-				slashMenuVisible = true;
 			} else {
 				slashMenuVisible = false;
 				slashQuery = '';
 			}
 		});
 
-		// close menu on click outside
 		document.addEventListener('click', (e) => {
 			if (!(e.target as HTMLElement).closest('.slash-menu')) {
 				slashMenuVisible = false;
@@ -215,16 +218,14 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<!-- Slash menu -->
 {#if slashMenuVisible && flatItems.length > 0}
 	<div class="slash-menu" style="position: absolute; left: {slashMenuX}px; top: {slashMenuY}px;">
 		{#each filteredItems as group}
 			<div class="slash-group">
 				<div class="slash-group-title">{group.name}</div>
-
 				{#each group.items as item}
 					<button
-						class="slash-item {flatItems[selectedIndex] === item ? 'selected' : ''}"
+						class="slash-item {flatItems[selectedIndex]?.label === item.label ? 'selected' : ''}"
 						onclick={() => selectItem(item)}
 					>
 						<span class="slash-icon">{item.icon}</span>
@@ -236,7 +237,7 @@
 	</div>
 {/if}
 
-<!-- Format sidebar -->
+<!-- Format Sidebar -->
 <div class="format-sidebar">
 	<button class="format-btn {isBold ? 'active' : ''}" onclick={toggleBold}><b>B</b></button>
 	<button class="format-btn {isItalic ? 'active' : ''}" onclick={toggleItalic}><i>I</i></button>
@@ -248,12 +249,14 @@
 	<button class="format-btn" onclick={toggleBulletList}>☰</button>
 </div>
 
+<!-- Top Controls -->
 <div class="flex max-w-full flex-row justify-between">
 	<div class="flex flex-col p-4">
 		<label class="w-full p-4 pl-6 text-2xl">
 			Title:
 			<input type="text" class="input-title" placeholder="How does ... work?" bind:value={title} />
 		</label>
+
 		<label class="flex items-center p-4 pl-6 text-2xl">
 			Description:
 			<input
@@ -264,8 +267,10 @@
 			/>
 		</label>
 	</div>
+
 	<div class="flex flex-col gap-y-8 p-2">
 		<button class="cursor-pointer p-2" onclick={submitPost}>Submit</button>
+
 		<label for="checkbox" class="mr-2 flex items-center pr-6">
 			Public?
 			<input type="checkbox" class="mx-4 ml-3 text-2xl" bind:checked={isPublic} />
@@ -273,19 +278,22 @@
 	</div>
 </div>
 
+<!-- Editor -->
 <div bind:this={container} class="editor mt-10 h-auto rounded-2xl"></div>
 
+<!-- Error -->
 {#if error}
 	<div
-		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg md:bottom-[80%] md:h-[10vh] md:w-[40%]"
 	>
 		<p class="px-8 py-4 text-xl md:text-2xl">{error}</p>
 	</div>
 {/if}
 
+<!-- Posting -->
 {#if posting}
 	<div
-		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-green-300 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-green-300 text-white shadow-lg md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
 	>
 		<p class="px-8 py-4 text-xl md:text-2xl">Sending it to the world ...</p>
 	</div>
