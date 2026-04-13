@@ -1,72 +1,154 @@
-.tiptap p{
-    margin: 1em 0;
+.tiptap p {
+	margin: 1em 0;
 }
 
-
-.editor{
-    background-color: white;
-    color: black;
-    height: auto;
-    min-height: 100vh;
-    width: 100%;
-    max-width: 100%;
+.editor {
+	background-color: white;
+	color: black;
+	height: auto;
+	min-height: 100vh;
+	width: 100%;
+	max-width: 100%;
+	margin-left: 4rem;
 }
 
-.editor .ProseMirror{
-    min-height: 100vh;
-    height: auto;
-    max-width: 100%;
-    outline: none;
-    padding: 1rem;
-    width: 100%;
-}
- 
-
-.floating-menu { 
-    background-color: aliceblue;
-    color: black;
-    border-radius: 3vh;
-    margin: 2vh;
-    max-width: 100%;
+.editor .ProseMirror {
+	min-height: 100vh;
+	height: auto;
+	max-width: 100%;
+	outline: none;
+	padding: 1rem;
+	width: 100%;
 }
 
-
-.editor h1{
-    font-size: xx-large;
-    font-weight: 800;
+.floating-menu {
+	background-color: aliceblue;
+	color: black;
+	border-radius: 3vh;
+	margin: 2vh;
+	max-width: 100%;
 }
 
-
-.editor h2{
-    font-size: x-large;
-    font-weight: 800;
+.editor h1 {
+	font-size: xx-large;
+	font-weight: 800;
 }
 
-
-.editor h3{
-    font-size:large;
-    font-weight: 700;
+.editor h2 {
+	font-size: x-large;
+	font-weight: 800;
 }
 
-.editor_bullets{
-    margin-left: 4vh;
-    list-style-type: disc;
+.editor h3 {
+	font-size: large;
+	font-weight: 700;
 }
 
-
-.editor_ordered-lists{
-    margin-left: 4vh;
-    list-style-type: decimal;
+.editor_bullets {
+	margin-left: 4vh;
+	list-style-type: disc;
 }
 
-
-.editor img{
-    width: 800px;
-    height: 500px;
-    justify-self: center;
+.editor_ordered-lists {
+	margin-left: 4vh;
+	list-style-type: decimal;
 }
 
+.editor img {
+	width: 800px;
+	height: 500px;
+	justify-self: center;
+}
 
 .option-menu .isactive {
-   color: blue;
+	color: blue;
+}
+
+.editor-wrapper {
+	position: relative;
+}
+
+.format-sidebar {
+	position: fixed;
+	left: 1rem;
+	top: 50%;
+	transform: translateY(-10%);
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	z-index: 50;
+	border-radius: 12px;
+	padding: 0.5rem;
+}
+
+.format-btn {
+	width: 40px;
+	height: 40px;
+	border-radius: 14px;
+	border: none;
+	background: #c8843a;
+	color: white;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.3rem;
+	font-style: normal;
+	font-weight: normal;
+	transition: background 0.15s;
+}
+
+.format-btn:hover {
+	background: #a06828;
+}
+
+.format-btn.active {
+	background: #7a4f1e;
+}
+
+.slash-menu {
+	background: white;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+	z-index: 100;
+	padding: 2px;
+	min-width: 300px;
+	overflow: hidden;
+}
+
+.slash-item {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	width: 100%;
+	padding: 0.6rem 1rem;
+	background: none;
+	border: none;
+	cursor: pointer;
+	text-align: left;
+	font-size: 0.95rem;
+	color: #1a1a1a;
+	transition: background 0.1s;
+}
+
+.slash-group-title {
+	padding: 0 10px;
+}
+
+.slash-item:hover,
+.slash-item.selected {
+	background: #efefef;
+}
+
+.slash-icon {
+	width: 30px;
+	height: 30px;
+	background: #f1f1f1;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.85rem;
+	font-weight: bold;
 }

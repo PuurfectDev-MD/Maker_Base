@@ -3,8 +3,11 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    plugins: [tailwindcss(), sveltekit()],
-    ssr: {
-        noExternal: ['layerChart', 'svelte-ux', '@layerstack/tailwind']
-    }
+	plugins: [tailwindcss(), sveltekit()],
+	ssr: {
+		noExternal: ['layerChart', 'svelte-ux', '@layerstack/tailwind']
+	},
+	optimizeDeps: {
+		include: ['@blocknote/core']
+	}
 });

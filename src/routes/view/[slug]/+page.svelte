@@ -1,7 +1,32 @@
 <script lang="ts">
 	import CommentSection from './CommentSection.svelte';
 	import ReactionSection from './ReactionSection.svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import { BlockNoteEditor } from '@blocknote/core';
+	import '@blocknote/core/fonts/inter.css';
+	import '@blocknote/ariakit/style.css';
+
 	let { data } = $props();
+
+	let container: HTMLElement;
+	let editor: BlockNoteEditor;
+
+	onMount(() => {
+		if (data.type !== 'success') return;
+
+		let blocks;
+		try {
+			blocks = JSON.parse(data.post.content);
+		} catch {
+			blocks = undefined;
+		}
+
+		editor = BlockNoteEditor.create({ initialContent: blocks });
+		editor.mount(container);
+		editor.isEditable = false;
+	});
+
+	onDestroy(() => editor?.mount(null));
 </script>
 
 {#await data.slugPost}
