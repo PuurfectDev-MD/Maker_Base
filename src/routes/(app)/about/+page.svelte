@@ -6,6 +6,7 @@
 	import CalendarActivity from './CalendarActivity.svelte';
 	let { data } = $props();
 	import AboutSkeleton from '$lib/components/AboutSkeleton.svelte';
+	import { getPostCountPerDay, getPostCountPerMonth } from '../user.remote.js';
 </script>
 
 <div class="my-5 grid grid-cols-2">
@@ -18,17 +19,18 @@
 		<h1>Email: {data.user.email}</h1>
 		<h1>Number of posts: ____</h1>
 		<h1>Number of dots: _____</h1>
-		<h1>Account create at: _____</h1>
+		<h1>Account created at: _____</h1>
 	</div>
 </div>
-{#await data.postsPerMonth}
+
+{#await getPostCountPerMonth(data.user.id)}
 	<AboutSkeleton showChart={true} />
 {:then chartData}
 	<div
 		style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem;"
 	>
 		<LineChart
-			data={chartData.data}
+			data={chartData.postMCounts}
 			x="date"
 			y="value"
 			padding={defaultChartPadding({ right: 10 })}
@@ -37,12 +39,12 @@
 	</div>
 {/await}
 
-{#await data.postsPerDay}
+{#await getPostCountPerDay(data.user.id)}
 	<AboutSkeleton showCalendar={true} />
 {:then calendarData}
 	<div
 		style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-top: 1.5rem;"
 	>
-		<CalendarActivity data={calendarData?.PostData} />
+		<CalendarActivity data={calendarData?.PostDCounts} />
 	</div>
 {/await}

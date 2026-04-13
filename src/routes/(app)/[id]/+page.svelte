@@ -1,13 +1,14 @@
 <script lang="ts">
 	import HomeSkeleton from '$lib/components/HomeSkeleton.svelte';
 	import { PlusIcon } from 'phosphor-svelte';
+	import { getUserDash } from '../user.remote.js';
 	let { data } = $props();
 </script>
 
-{#await data.result}
+{#await getUserDash(data.user.id)}
 	<HomeSkeleton></HomeSkeleton>
 {:then info}
-	{#if info.type == 'success'}
+	{#if info?.type == 'success'}
 		<h1 class="mt-4 p-3 text-7xl!">Hello, {data.user.user_metadata.username}</h1>
 		<div class=" px-4 py-2">
 			<h3>You have written {info.totalCount} notes across ___ topics.</h3>
@@ -71,7 +72,7 @@
 		<div class="mt-4 mb-6 bg-[var(--bg-card)] pb-3 opacity-50">
 			<div class=" mr-3 flex justify-end">
 				<a
-					href=""
+					href="/tag/new"
 					class="my-3 rounded-sm border-2 px-3 py-2 hover:bg-[var(--bg-card)] hover:no-underline!"
 					>Add new</a
 				>
@@ -95,5 +96,7 @@
 
 			<h1 class="py-4 text-center">Coming soon!</h1>
 		</div>
+	{:else}
+		<p>There was error fetching user data</p>
 	{/if}
 {/await}
