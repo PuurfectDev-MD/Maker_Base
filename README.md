@@ -37,7 +37,9 @@ The goal is to move away from asking AI the same questions repeatedly and instea
 
 ##  Pending work for  Version 1.0
 
-- **UI/UX Polishing:** Refining icons, color palettes, and GSAP animations.
+- **Complete dashboard:** Fetching streaks, total dots recieved, number of words written for users.
+- **Deleting Posts:** Deleting posts by the author.
+- **Updating Posts:** Editing posts by the author.
 -  **Tagging System:** Categorizing posts for easier discoverability.
 -  **Core Pages:** Completing Settings, Info, and Profile sections.
 -  **Enhanced Content:** Support for YouTube embeds and tables within notes.

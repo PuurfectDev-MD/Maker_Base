@@ -2,7 +2,7 @@
 	import Skeleton from './Skeleton.svelte';
 </script>
 
-<div class=" grid min-h-screen grid-cols-3 items-stretch gap-8 p-4">
+<div class=" grid min-h-screen grid-cols-1 items-stretch gap-8 p-4">
 	{#each Array(6) as post}
 		<div class="card flex h-full max-h-[15rem] flex-col p-4">
 			<Skeleton height="5rem"></Skeleton>

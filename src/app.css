@@ -359,3 +359,14 @@ button:hover{
 .main h1{
     font-size: 4rem;
 }
+
+.mobile-nav a{
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-weight: 600;
+  font-size: 1.75rem;
+  margin: 2px 8px;
+  color: var(--text-primary)
+
+}

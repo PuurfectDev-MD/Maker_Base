@@ -5,7 +5,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { redirect } from '@sveltejs/kit';
 
-	import { UserIcon } from 'phosphor-svelte';
+	import { UserIcon, ListIcon } from 'phosphor-svelte';
 
 	let { children, data } = $props();
 	const themes = ['warm', 'chalkboard', 'blueprint'];
@@ -20,6 +20,7 @@
 	});
 
 	let error_message = $state('');
+	let navOpen = $state(false);
 	let sidebar = $state(false);
 
 	async function logout() {
@@ -35,7 +36,7 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
-<nav class="grid grid-cols-3 items-center p-4">
+<nav class="hidden grid-cols-3 items-center p-4 md:grid">
 	<div></div>
 	<div class="flex flex-row justify-center gap-x-8 text-2xl">
 		<a href="/">Home</a>
@@ -83,6 +84,66 @@
 		{/if}
 	</div>
 </nav>
-<main class="w-full max-w-full overflow-x-hidden px-4">
+
+<nav class="mobile-nav relative w-full md:hidden">
+	<div class="flex justify-between p-3">
+		<button onclick={() => (navOpen = !navOpen)}><ListIcon size={38}></ListIcon></button>
+
+		<div>
+			{#if !data.user}
+				<a
+					href="/auth/signup"
+					class=" rounded-[4px] border border-[var(--primary-color)] px-3 py-2 no-underline! hover:bg-[var(--bg-card)]"
+					>Signup</a
+				>
+			{:else}
+				<button class="cursor-pointer p-3" onclick={() => (sidebar = !sidebar)}
+					><UserIcon size={38} /></button
+				>
+				{#if sidebar}
+					<div
+						class="absolute top-[10vh] right-10 flex flex-col gap-y-2 bg-[var(--bg-card)] p-4"
+						onmouseleave={() => (sidebar = !sidebar)}
+					>
+						<a href="/about">You</a>
+						<a href="/setting">Setting</a>
+						<a onclick={logout} href="/auth/login">Logout</a>
+					</div>
+				{/if}
+			{/if}
+		</div>
+	</div>
+
+	{#if navOpen}
+		<div
+			class="absolute inset-x-0 z-40 mx-2 mb-2 flex max-h-screen flex-col items-start gap-y-4 rounded-2xl px-6"
+			onclick={() => (navOpen = false)}
+		>
+			<a href="/">Home</a>
+			<a href="/explore">Explore</a>
+			<a href="/info">Info</a>
+			<a href="/auth/signup">Signup</a>
+
+			<div class="pt-4" onclick={(e) => e.stopPropagation()}>
+				<select
+					bind:value={theme}
+					onchange={(e) => {
+						saveTheme(e.currentTarget.value);
+					}}
+					class=" appearance-none border-0 border-b-2 border-black bg-[var(--bg-card)] pr-10 outline-none"
+				>
+					{#each themes as t}
+						<option value={t} class="p-2 text-center">{t}</option>
+					{/each}
+				</select>
+			</div>
+		</div>
+	{/if}
+</nav>
+<main
+	class="w-full max-w-full overflow-x-hidden px-4 {navOpen
+		? 'pointer-events-none blur-2xl'
+		: ''} transition-all"
+>
 	{@render children()}
 </main>

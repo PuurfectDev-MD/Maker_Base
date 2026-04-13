@@ -31,8 +31,6 @@
 			error_message = signupError.message;
 			return;
 		}
-
-		window.location.href = `/auth/verify`;
 	}
 </script>
 
@@ -81,8 +79,8 @@
 	</form>
 </div>
 
-<div class="flex flex-row justify-center gap-x-4">
-	<h2 class="p-3">Alteady Have an account?</h2>
+<div class="flex justify-center gap-x-2 md:gap-x-4">
+	<h2 class="p-3">Already Have an account?</h2>
 	<a href="/auth/login" class="rounded-2xl border-2 border-r-4 p-3 no-underline!"> Login</a>
 </div>
 
@@ -98,7 +96,7 @@
 	<div
 		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
 	>
-		<p class="px-8 py-4 text-xl md:text-2xl">Creating your place :)</p>
+		<p class="px-8 py-4 text-xl md:text-2xl">Check your email :)</p>
 	</div>
 {/if}
 
