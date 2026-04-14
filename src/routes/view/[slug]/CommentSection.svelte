@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import Skeleton from '$lib/components/Skeleton.svelte';
 	import { createComment, getCommentByPost } from '../data.remote';
 
 	let { data } = $props();
@@ -21,9 +22,16 @@
 </script>
 
 {#await commentPromise}
-	<p>Loading comments</p>
+	<div class="comment-section rounded-x m-4 h-auto p-4">
+		{#each Array(2) as _}
+			<div class="p-3">
+				<Skeleton></Skeleton>
+				<Skeleton></Skeleton>
+			</div>
+		{/each}
+	</div>
 {:then response}
-	<div class="comment-section w-scree rounded-x m-4 h-auto p-4">
+	<div class="comment-section rounded-x m-4 h-auto p-4">
 		<h1>Comments</h1>
 		<div class="flex justify-end">
 			<button
