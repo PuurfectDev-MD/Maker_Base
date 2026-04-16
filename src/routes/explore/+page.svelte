@@ -12,7 +12,7 @@
 	{#if postsResult.type == 'success'}
 		<div class=" grid-col-1 grid min-h-screen items-stretch gap-8 p-4 md:grid-cols-3">
 			{#each postsResult.result as post}
-				<div class="card flex h-full max-h-full flex-col p-4 md:max-h-[100%]">
+				<div class="card flex h-full max-h-[300px] flex-col p-4 md:max-h-[400px]">
 					<a href="/view/{post.slug}" class="!no-underline">
 						<h1>{post.title}</h1>
 						<h3 class="description pt-9">{post.description}</h3>

@@ -9,7 +9,7 @@
 	<HomeSkeleton></HomeSkeleton>
 {:then info}
 	{#if info?.type == 'success'}
-		<h1 class="mt-4 p-3 text-7xl!">Hello, {data.user.user_metadata.username}</h1>
+		<h1 class="mt-4 p-3 text-7xl!">Hello, {data.user.username}</h1>
 		<div class=" px-4 py-2">
 			<h3>You have written {info.totalCount} notes across ___ topics.</h3>
 		</div>

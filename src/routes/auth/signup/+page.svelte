@@ -1,9 +1,26 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabase';
-
+	let { data } = $props();
 	let signing = $state(false);
 	let error_message = $state('');
 	let email_sent = $state(false);
+
+	import { GoogleLogoIcon, Check } from 'phosphor-svelte';
+	let loading = $state(false);
+
+	async function signInWithGoogle() {
+		loading = true;
+		const { error } = await supabase.auth.signInWithOAuth({
+			provider: 'google',
+			options: {
+				redirectTo: `${window.location.origin}/auth/callback`
+			}
+		});
+		if (error) {
+			console.error(error);
+			loading = false;
+		}
+	}
 
 	async function signup(e: Event) {
 		e.preventDefault();
@@ -59,23 +76,30 @@
 				<input class="input-form ml-4 text-black" required type="password" name="password" />
 			</label>
 		</div>
-		<div class="row p-4">
-			<label>
-				Confirm Password:
-				<input
-					class="input-form ml-4 text-black"
-					required
-					type="password"
-					name="password_confirm"
-				/>
-			</label>
+		<div class="flex items-center p-4">
+			<label class="w-40">Confirm Password:</label>
+			<input
+				class="input-form mb-2 flex-1 text-black"
+				required
+				type="password"
+				name="password_confirm"
+			/>
 		</div>
 		<div class="avatar_select hidden">
 			<input name="avatar_selection" />
 		</div>
-		<button type="submit" class="mt-12 ml-[33%] rounded-xl px-4 text-black md:mt-8 md:ml-0">
-			Signup</button
-		>
+
+		<div class="flex justify-center gap-x-8 pt-5">
+			<div class="mx-3">
+				<button type="submit"> <Check size={32}></Check></button>
+			</div>
+			<div class="mx-4 h-10 w-px bg-[var(--accent)]"></div>
+			<div class="">
+				<button onclick={signInWithGoogle} disabled={loading}
+					><GoogleLogoIcon size={32}></GoogleLogoIcon></button
+				>
+			</div>
+		</div>
 	</form>
 </div>
 

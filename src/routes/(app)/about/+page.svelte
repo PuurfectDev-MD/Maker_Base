@@ -1,25 +1,30 @@
 <script lang="ts">
 	import { LineChart, defaultChartPadding } from 'layerchart';
 
-	import { onMount } from 'svelte';
-
 	import CalendarActivity from './CalendarActivity.svelte';
 	let { data } = $props();
 	import AboutSkeleton from '$lib/components/AboutSkeleton.svelte';
 	import { getPostCountPerDay, getPostCountPerMonth } from '../user.remote.js';
 </script>
 
-<div class="my-5 grid grid-cols-2">
-	<div>
-		<img src="/images/image.png" class="w-fit p-3" />
+<div class="my-5 grid max-h-[400px] grid-cols-2">
+	<div class="flex hidden h-full items-center justify-center md:block">
+		<div class="aspect-square h-full max-h-[350px] overflow-hidden rounded-full bg-red-500">
+			<img
+				src={data.user?.avatarUrl || '/images/image.png'}
+				alt="Profile"
+				class="h-full w-full object-cover"
+				referrerpolicy="no-referrer"
+			/>
+		</div>
 	</div>
-
-	<div class="card jusitfy-center flex flex-col">
-		<h1>Username: {data.user.user_metadata.username}</h1>
+	<div class="card jusitfy-center flex shrink flex-col">
+		<h1>Username: {data.user.username}</h1>
 		<h1>Email: {data.user.email}</h1>
+		<h1>Verified:{data.user.emailVerified ? 'Yes' : 'No'}</h1>
 		<h1>Number of posts: ____</h1>
 		<h1>Number of dots: _____</h1>
-		<h1>Account created at: _____</h1>
+		<h1>Account created at: {data.user.created_at}</h1>
 	</div>
 </div>
 

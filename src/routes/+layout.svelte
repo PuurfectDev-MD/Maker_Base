@@ -2,8 +2,7 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { supabase } from '$lib/supabase.js';
-	import { invalidateAll } from '$app/navigation';
-	import { redirect } from '@sveltejs/kit';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	import { UserIcon, ListIcon } from 'phosphor-svelte';
 
@@ -28,10 +27,11 @@
 
 		if (error) {
 			error_message = 'There was an error while logging out. Try again';
+			return;
 		}
 
 		await invalidateAll();
-		redirect(303, '/');
+		goto('/');
 	}
 </script>
 

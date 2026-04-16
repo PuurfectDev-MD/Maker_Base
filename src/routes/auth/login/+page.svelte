@@ -1,8 +1,23 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabase';
-
 	let logging_in = $state(false);
+	let loading = $state(false);
 	let error_message = $state('');
+
+	import { GoogleLogoIcon, Check } from 'phosphor-svelte';
+
+	async function logInWithGoogle() {
+		const { data, error } = await supabase.auth.signInWithOAuth({
+			provider: 'google',
+			options: {
+				redirectTo: `${window.location.origin}/auth/callback`,
+				queryParams: {
+					access_type: 'offline',
+					prompt: 'select_account'
+				}
+			}
+		});
+	}
 	async function login_with_email(e: Event) {
 		logging_in = true;
 		e.preventDefault();
@@ -14,6 +29,7 @@
 
 		if (error) {
 			error_message = ' The credentials dont match to any user. Try again.';
+			logging_in = false;
 		}
 
 		await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -39,12 +55,18 @@
 				<input class="input-form ml-4 text-black" required type="password" name="password" />
 			</label>
 		</div>
-		<button
-			type="submit"
-			class="rounded-x mt-12 ml-[33%] cursor-pointer p-4 text-black md:mt-8 md:ml-0"
-		>
-			Login</button
-		>
+
+		<div class="flex justify-center gap-x-8 pt-5">
+			<div class="mx-3">
+				<button type="submit"> <Check size={32}></Check></button>
+			</div>
+			<div class="mx-4 h-10 w-px bg-[var(--accent)]"></div>
+			<div class="">
+				<button type="button" onclick={logInWithGoogle} disabled={loading}
+					><GoogleLogoIcon size={32}></GoogleLogoIcon></button
+				>
+			</div>
+		</div>
 	</form>
 </div>
 

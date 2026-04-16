@@ -16,7 +16,7 @@ export const users = pgTable('users', {
 export const posts = pgTable('posts', {
     postId: uuid('id').defaultRandom().primaryKey(),
     authorId: uuid('author_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-    authorUsername: text("author_username").notNull().references(() => users.username, { onDelete: 'cascade' }),
+    authorUsername: text("author_username").notNull().references(() => users.username, { onDelete: 'cascade', onUpdate: 'cascade' }),
     title: text('title').notNull(),
     description: text('description').notNull(),
     slug: text('slug').notNull().unique(),
@@ -31,7 +31,7 @@ export const comments = pgTable('comments', {
     id: uuid('id').defaultRandom().primaryKey(),
     postSlug: text('post_slug').notNull().references(() => posts.slug, { onDelete: 'cascade' }),
     userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-    userName: text('user_name').notNull().references(() => users.username, { onDelete: 'cascade' }),
+    userName: text('user_name').notNull().references(() => users.username, { onDelete: 'cascade', onUpdate: 'cascade' }),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     content: text('comment').notNull()
 })
