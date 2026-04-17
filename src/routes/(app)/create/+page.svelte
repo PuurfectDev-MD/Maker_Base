@@ -5,6 +5,10 @@
 	import { goto } from '$app/navigation';
 	import { saveToDb } from '../posts/posts.remote';
 	import type { BlockNoteEditor } from '@blocknote/core';
+	import { slide, fly, fade } from 'svelte/transition';
+	import { expoOut } from 'svelte/easing';
+
+	import { ArrowsOutLineVerticalIcon, XIcon } from 'phosphor-svelte';
 
 	let title = $state('');
 	let description = $state('');
@@ -24,6 +28,7 @@
 	let slashQuery = $state('');
 	let selectedIndex = $state(0);
 
+	let sidebarVisible = $state(true);
 	const allItems = [
 		{
 			name: 'Headings',
@@ -238,16 +243,29 @@
 {/if}
 
 <!-- Format Sidebar -->
-<div class="format-sidebar">
-	<button class="format-btn {isBold ? 'active' : ''}" onclick={toggleBold}><b>B</b></button>
-	<button class="format-btn {isItalic ? 'active' : ''}" onclick={toggleItalic}><i>I</i></button>
-	<button class="format-btn {isCode ? 'active' : ''}" onclick={toggleCode}>&lt;/&gt;</button>
-	<button class="format-btn" onclick={() => setHeading(1)}>H1</button>
-	<button class="format-btn" onclick={() => setHeading(2)}>H2</button>
-	<button class="format-btn" onclick={() => setHeading(3)}>H3</button>
-	<button class="format-btn" onclick={toggleOrderedList}>1≡</button>
-	<button class="format-btn" onclick={toggleBulletList}>☰</button>
-</div>
+{#if sidebarVisible}
+	<div
+		class="format-sidebar"
+		in:fly={{ y: -10, duration: 200, easing: expoOut }}
+		out:fade={{ duration: 150 }}
+	>
+		<button class=" {isBold ? 'active' : ''}" onclick={toggleBold}><b>B</b></button>
+		<button class={isItalic ? 'active' : ''} onclick={toggleItalic}><i>I</i></button>
+		<button class=" {isCode ? 'active' : ''}" onclick={toggleCode}>&lt;/&gt;</button>
+		<button onclick={() => setHeading(1)}>H1</button>
+		<button onclick={() => setHeading(2)}>H2</button>
+		<button onclick={() => setHeading(3)}>H3</button>
+		<button onclick={toggleOrderedList}>1≡</button>
+
+		<button onclick={() => (sidebarVisible = !sidebarVisible)}
+			><ArrowsOutLineVerticalIcon size={24}></ArrowsOutLineVerticalIcon></button
+		>
+	</div>
+{:else}
+	<div class="absolute bottom-0 left-5">
+		<button onclick={() => (sidebarVisible = !sidebarVisible)}><XIcon size={24}></XIcon></button>
+	</div>
+{/if}
 
 <!-- Top Controls -->
 <div class="flex max-w-full flex-row justify-between">
