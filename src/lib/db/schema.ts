@@ -25,6 +25,7 @@ export const posts = pgTable('posts', {
     isPublic: boolean('is_public').notNull().default(false),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()),
+    tagIds: uuid("tag_ids").array().default([])
 })
 
 export const comments = pgTable('comments', {
@@ -43,4 +44,16 @@ export const dots = pgTable('dots', {
     createdAt: timestamp('created_at').notNull().defaultNow()
 }, (table) => ({
     uniqueDot: unique().on(table.postSlug, table.userId)
+}))
+
+
+
+export const tags = pgTable('tags', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    authorId: uuid("author_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+
+}, (table) => ({
+    uniqueTag: unique().on(table.authorId, table.name)
 }))

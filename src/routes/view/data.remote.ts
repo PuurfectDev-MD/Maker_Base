@@ -36,31 +36,32 @@ export const getPostByUser = query(v.string(), async (id) => {
 })
 
 export const getCommentByPost = query(v.string(), async (postSlug) => {
-    const { data, error } = await supabase.from('comments').select().eq('post_slug', postSlug)
+    const event = getRequestEvent()
+    const { data, error } = await event.locals.supabase.from('comments').select().eq('post_slug', postSlug)
 
     if (error) return { type: "db_error", message: "Something went wrong. Try again" }
     return { type: "success", Postcomment: data }
 })
 
 export const createComment = form(v.object({
-    content: v.pipe(v.string(), v.nonEmpty()),
-    postSlug: v.pipe(v.string(), v.nonEmpty()),
-    userName: v.pipe(v.string(), v.nonEmpty())
-}), async ({ content, postSlug, userName }) => {
+    content: v.pipe(v.string(), v.nonEmpty())
+}), async ({ content }) => {
     const event = getRequestEvent()
     const user = event.locals.user
 
-    console.log("calling db")
-
+    const slug = event.url.pathname.split('/').pop()
     const { error } = await event.locals.supabase.from('comments').insert({
         user_id: user.id,
-        post_slug: postSlug,
+        post_slug: slug,
         comment: content,
-        user_name: userName
+        user_name: user.user_metadata.username
     })
 
 
     if (error) {
+        console.log("")
+        console.log("")
+        console.log(error.message)
         return { type: "db_error", message: "Unable to send it to the world :(" }
     }
 
@@ -70,7 +71,8 @@ export const createComment = form(v.object({
 
 
 export const getDots = query(v.string(), async (postSlug) => {
-    const { data, error } = await supabase.from("posts").select("dots_count").eq("slug", postSlug).single()
+    const event = getRequestEvent()
+    const { data, error } = await event.locals.supabase.from("posts").select("dots_count").eq("slug", postSlug).single()
 
     if (error) {
         console.log(error.message)

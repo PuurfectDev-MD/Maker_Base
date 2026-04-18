@@ -44,8 +44,6 @@
 
 		{#if commenting}
 			<form {...createComment} class="mt-4 p-3">
-				<input name="postSlug" value={page.params.slug} />
-				<input name="userName" value={data.user.user_metadata.username} />
 				<label>
 					Comment:
 					<input {...createComment.fields.content} name="content" />

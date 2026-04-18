@@ -72,29 +72,21 @@
 		<div class="mt-4 mb-6 bg-[var(--bg-card)] pb-3 opacity-50">
 			<div class=" mr-3 flex justify-end">
 				<a
-					href="/tag/new"
+					href="/create/tag"
 					class="my-3 rounded-sm border-2 px-3 py-2 hover:bg-[var(--bg-card)] hover:no-underline!"
-					>Add new</a
+					>Check all</a
 				>
 			</div>
 
-			<div class="my-4 flex items-center justify-center-safe">
+			<div class="my-4 flex items-center justify-center">
 				<h2 class="px-4">Your tags -></h2>
-				<div class="tag">
-					<h3>I2C</h3>
-				</div>
-				<div class="tag">
-					<h3>I2C</h3>
-				</div>
-				<div class="tag">
-					<h3>I2C</h3>
-				</div>
-				<div class="tag">
-					<h3>I2C</h3>
-				</div>
-			</div>
 
-			<h1 class="py-4 text-center">Coming soon!</h1>
+				{#each info.recentTags as tag}
+					<div class="tag">
+						<h3>{tag.name}</h3>
+					</div>
+				{/each}
+			</div>
 		</div>
 	{:else}
 		<p>There was error fetching user data</p>
