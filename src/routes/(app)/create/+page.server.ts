@@ -5,7 +5,7 @@ import { error } from 'console'
 export function load({ locals }) {
     if (!locals.user?.id) {
         error(401, "You cant make a post")
-        redirect(303, "/auth/signup")
+        throw redirect(303, "/auth/signup")
     }
 
     return { user: locals.user }

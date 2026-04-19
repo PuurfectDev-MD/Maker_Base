@@ -101,8 +101,8 @@ export const addNewTag = form(v.object({
 export const getUserTags = query(v.string(), async (id) => {
     const event = getRequestEvent()
 
-    const recentTags = event.locals.supabase.from("tags").select("name, created_at").eq("author_id", id).limit(4).order("created_at", { ascending: false })
-    const allTags = event.locals.supabase.from("tags").select("name, created_at").eq("author_id", id).order("created_at", { ascending: true })
+    const recentTags = event.locals.supabase.from("tags").select("name, created_at,id").eq("author_id", id).limit(4).order("created_at", { ascending: false })
+    const allTags = event.locals.supabase.from("tags").select("name, created_at,id").eq("author_id", id).order("created_at", { ascending: true })
 
     const [recentTagRes, allTagsRes] = await Promise.all([recentTags, allTags])
 

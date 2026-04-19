@@ -9,13 +9,18 @@
 	import { expoOut } from 'svelte/easing';
 
 	import { ArrowsOutLineVerticalIcon, XIcon } from 'phosphor-svelte';
+	import { getUserTags } from '../user.remote';
 
+	let { data } = $props();
 	let title = $state('');
+	const getTagsPromise = getUserTags(data.user.id);
+	let selected = $state<string[]>([]);
 	let description = $state('');
 	let isPublic = $state(true);
 	let container: HTMLDivElement = null!;
 	let editor: BlockNoteEditor;
 
+	let tagDropDownOpen = $state(false);
 	let error = $state('');
 	let posting = $state(false);
 	let isBold = $state(false);
@@ -28,6 +33,9 @@
 	let slashQuery = $state('');
 	let selectedIndex = $state(0);
 
+	function toggle(item: string) {
+		selected = selected.includes(item) ? selected.filter((i) => i != item) : [...selected, item];
+	}
 	let sidebarVisible = $state(true);
 	const allItems = [
 		{
@@ -137,7 +145,7 @@
 	async function submitPost() {
 		posting = true;
 		const content = JSON.stringify(editor.document);
-		const { type, message } = await saveToDb({ content, title, isPublic, description });
+		const { type, message } = await saveToDb({ content, title, isPublic, description, selected });
 		posting = false;
 		if (type !== 'success') error = message;
 		else goto('/');
@@ -293,6 +301,37 @@
 			Public?
 			<input type="checkbox" class="mx-4 ml-3 text-2xl" bind:checked={isPublic} />
 		</label>
+
+		<div class="tags-dropdown absolute top-60 right-15 z-50">
+			<button onclick={() => (tagDropDownOpen = !tagDropDownOpen)}
+				>{selected.length > 0 ? `${selected.length} Tagged` : 'Tags'}</button
+			>
+
+			{#if tagDropDownOpen}
+				{#await getTagsPromise}
+					<p>Loading....</p>
+				{:then options}
+					{#if options.all.length > 0}
+						<ul>
+							{#each options.all as option}
+								<li>
+									<label>
+										{option.name}
+										<input
+											type="checkbox"
+											checked={selected.includes(option.id)}
+											onchange={() => toggle(option.id)}
+										/>
+									</label>
+								</li>
+							{/each}
+						</ul>
+					{:else}
+						<p>Add tags and check here!</p>
+					{/if}
+				{/await}
+			{/if}
+		</div>
 	</div>
 </div>
 

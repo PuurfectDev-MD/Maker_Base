@@ -4,11 +4,12 @@
 	import { BlockNoteEditor } from '@blocknote/core';
 	import '@blocknote/core/fonts/inter.css';
 	import '@blocknote/ariakit/style.css';
-	import { getPostBySlug } from '../data.remote.js';
+	import { getPostBySlug, getTagsByPostSlug } from '../data.remote.js';
 	import { page } from '$app/state';
 	import ViewPostSkeleton from '$lib/components/ViewPostSkeleton.svelte';
 
 	let { data } = $props();
+	const postTagsPromise = getTagsByPostSlug(page.params.slug!);
 	const postPromise = getPostBySlug(page.params.slug!);
 	function renderBlockNote(container: HTMLElement, content: string) {
 		let blocks;
@@ -38,6 +39,22 @@
 			<h1 class="p-2">{result.post.title}</h1>
 			<button class="p-2">Edit</button>
 		</div>
+
+		{#await postTagsPromise}
+			<p>Loading tags ....</p>
+		{:then Tagresult}
+			{#if Tagresult.type == 'success'}
+				<div class="mx-3 flex justify-start gap-x-4 p-4">
+					{#each Tagresult.tags as tag}
+						<div class="tag">
+							<p>{tag.name}</p>
+						</div>
+					{/each}
+				</div>
+			{:else}
+				<p>Loading tags ....</p>
+			{/if}
+		{/await}
 		<div class="p-6">
 			<div use:renderBlockNote={result.post.content} />
 		</div>

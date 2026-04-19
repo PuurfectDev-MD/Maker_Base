@@ -7,9 +7,10 @@ export const saveToDb = command(v.object({
     description: v.pipe(v.string(), v.nonEmpty()),
     title: v.string(),
     isPublic: v.boolean(),
+    selected: v.array(v.string())
 
 }),
-    async ({ title, content, isPublic, description }) => {
+    async ({ title, content, isPublic, description, selected }) => {
         const event = getRequestEvent()
         const user = event.locals.user
         const username = event.locals.user.user_metadata.username
@@ -23,7 +24,8 @@ export const saveToDb = command(v.object({
             content,
             author_id: user?.id,
             is_public: isPublic,
-            slug
+            slug,
+            tag_ids: selected
         })
 
         if (error) {

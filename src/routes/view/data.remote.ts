@@ -105,3 +105,21 @@ export const addDots = command(v.string(), async (postSlug) => {
     }
 }
 )
+
+
+export const getTagsByPostSlug = query(v.string(), async (slug) => {
+    const event = getRequestEvent()
+    const { data, error } = await event.locals.supabase.from("posts").select("tag_ids").eq("slug", slug).single()
+
+    if (error) {
+        return { type: "db_error", message: "There was an error fetching tags." }
+    }
+
+
+    const { data: tagsName, error: tagNameFetch } = await event.locals.supabase.from("tags").select("name").in("id", data.tag_ids)
+
+    if (tagNameFetch) {
+        return { type: "db_error", message: "There was an error fetching tags." }
+    }
+    return { type: "success", tags: tagsName }
+})
