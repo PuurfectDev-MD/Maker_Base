@@ -21,7 +21,7 @@
 	let editor: BlockNoteEditor;
 
 	let tagDropDownOpen = $state(false);
-	let error = $state('');
+	let error = $state<string | null>(null);
 	let posting = $state(false);
 	let isBold = $state(false);
 	let isItalic = $state(false);
@@ -33,6 +33,28 @@
 	let slashQuery = $state('');
 	let selectedIndex = $state(0);
 
+	function validatePresence() {
+		if (!title) {
+			showError('Title required');
+			return false;
+		}
+		if (!description) {
+			showError('Description required');
+			return false;
+		}
+		if (!selected.length) {
+			showError('Select a tag');
+			return false;
+		}
+		return true;
+	}
+
+	function showError(message: string) {
+		error = message;
+		setTimeout(() => {
+			error = null;
+		}, 3000);
+	}
 	function toggle(item: string) {
 		selected = selected.includes(item) ? selected.filter((i) => i != item) : [...selected, item];
 	}
@@ -143,12 +165,14 @@
 	}
 
 	async function submitPost() {
-		posting = true;
-		const content = JSON.stringify(editor.document);
-		const { type, message } = await saveToDb({ content, title, isPublic, description, selected });
-		posting = false;
-		if (type !== 'success') error = message;
-		else goto('/');
+		if (validatePresence()) {
+			posting = true;
+			const content = JSON.stringify(editor.document);
+			const { type, message } = await saveToDb({ content, title, isPublic, description, selected });
+			posting = false;
+			if (type !== 'success') showError(message);
+			else goto('/');
+		}
 	}
 
 	function toggleBold() {

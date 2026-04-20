@@ -1,15 +1,48 @@
 <script lang="ts">
-	import { addNewTag, getUserTags } from '../../user.remote';
+	import { addNewTag, deleteTag, getUserTags } from '../../user.remote';
+	import { XIcon } from 'phosphor-svelte';
 
 	let { data } = $props();
 	let addNew = $state(false);
+	let loading = $state(true);
+	let tags = $state<{
+		all: { id: string; name: string }[];
+		recent: { id: string; name: string }[];
+	}>({ all: [], recent: [] });
+
+	$effect(() => {
+		if (addNewTag.result?.type === 'success') {
+			getUserTags(data.user.id).then((result) => {
+				tags = result;
+			});
+		}
+	});
+
+	getUserTags(data.user.id).then((result) => {
+		tags = result;
+		loading = false;
+	});
+
+	async function deleteUserTag(id: string) {
+		loading = true;
+		tags = {
+			all: tags.all.filter((t) => t.id !== id),
+			recent: tags.recent.filter((t) => t.id !== id)
+		};
+		const result = await deleteTag(id);
+
+		if (result.type == 'db_error') {
+			console.log(result.message);
+			const fresh = await getUserTags(data.user.id);
+			tags = fresh;
+		}
+		loading = false;
+	}
 </script>
 
-{#await getUserTags(data.user.id)}
-	<p>Loading</p>
-{:then tags}
+{#if !loading}
 	{#if tags.all.length > 0}
-		<div class="mt-4 mb-6 bg-[var(--bg-card)] py-5 pb-3">
+		<div class="mt-4 mb-6 rounded-2xl bg-[var(--bg-card)] py-5 pb-3">
 			<div class="my-4 flex items-center justify-center">
 				<h2 class="px-4">Recent:</h2>
 				{#each tags.recent as tag}
@@ -20,9 +53,9 @@
 			</div>
 		</div>
 
-		<div class="mt-5 bg-[var(--bg-card)] py-8">
+		<div class="mt-5 rounded-2xl bg-[var(--bg-card)] py-8">
 			<div class="flex justify-between px-2">
-				<div>
+				<div class="px-3">
 					<h1>All Tags</h1>
 				</div>
 				<div class=" mr-3 flex justify-end">
@@ -30,10 +63,13 @@
 				</div>
 			</div>
 
-			<div class="flex items-center justify-center">
+			<div class="flex items-center justify-center gap-x-8">
 				{#each tags.all as tag}
-					<div class="tag">
+					<div class="tag flex flex-row items-center gap-1">
 						<h3>{tag.name}</h3>
+						<button class="tag-x" onclick={() => deleteUserTag(tag.id)}
+							><XIcon size={24}></XIcon>
+						</button>
 					</div>
 				{/each}
 			</div>
@@ -49,7 +85,9 @@
 			</div>
 		</div>
 	{/if}
-{/await}
+{:else}
+	<p>Loading</p>
+{/if}
 
 {#if addNew}
 	<div class="mt-3 bg-[var(--bg-card)] p-4">

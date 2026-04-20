@@ -98,6 +98,19 @@ export const addNewTag = form(v.object({
     return { type: "success", message: "Your tag is saved!" }
 })
 
+
+
+export const deleteTag = query(v.string(), async (id) => {
+    let event = getRequestEvent()
+
+    const { error } = await event.locals.supabase.from("tags").delete().eq("id", id)
+
+    if (error) {
+        return { type: "db_error", message: "There was an error deleting tags" }
+    }
+    return { type: "success", message: "delted succesfully." }
+})
+
 export const getUserTags = query(v.string(), async (id) => {
     const event = getRequestEvent()
 

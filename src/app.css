@@ -226,7 +226,7 @@ pre   { padding: 1rem; overflow-x: auto; border: 1px solid var(--border); border
 
 /* Tag- pill*/
 .tag {
-  display: inline-block;
+  display: flex;
   background: var(--accent-soft);
   color: var(--accent);
   font-family: var(--font-body);
@@ -237,6 +237,19 @@ pre   { padding: 1rem; overflow-x: auto; border: 1px solid var(--border); border
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
+.tag-x{
+  background: transparent;
+   color: var(--text-primary);
+     border-radius: 4px;
+    cursor: pointer;
+    padding: 2px 4px;
+    margin-bottom: 1rem;
+     transition: opacity 0.15s ease, background-color 0.15s ease;
+
+}
+
+
 
 
 /* Blueprint: square tags */

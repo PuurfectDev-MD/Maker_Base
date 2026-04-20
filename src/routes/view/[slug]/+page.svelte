@@ -9,6 +9,7 @@
 	import ViewPostSkeleton from '$lib/components/ViewPostSkeleton.svelte';
 
 	let { data } = $props();
+	let error = $state('');
 	const postTagsPromise = getTagsByPostSlug(page.params.slug!);
 	const postPromise = getPostBySlug(page.params.slug!);
 	function renderBlockNote(container: HTMLElement, content: string) {
@@ -38,6 +39,9 @@
 		<div class="flex w-full flex-row items-center justify-between p-4">
 			<h1 class="p-2">{result.post.title}</h1>
 			<button class="p-2">Edit</button>
+		</div>
+		<div class="px-6">
+			<h3 class="px-2 opacity-85">{result.post.description}</h3>
 		</div>
 
 		{#await postTagsPromise}
