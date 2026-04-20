@@ -379,3 +379,28 @@
 		<p class="px-8 py-4 text-xl md:text-2xl">Sending it to the world ...</p>
 	</div>
 {/if}
+
+<style>
+	:global(.bn-block-outer) {
+		margin: 0 !important;
+		padding: 0 !important;
+		line-height: 1.5 !important;
+	}
+
+	:global(.bn-block) {
+		margin: 0 !important;
+		padding: 0 !important;
+		line-height: 1.5 !important;
+	}
+
+	:global(.bn-block-content) {
+		padding-top: 1px !important;
+		padding-bottom: 1px !important;
+		line-height: 1.5 !important;
+	}
+
+	:global(.bn-block-content p) {
+		margin: 0 !important;
+		line-height: 1.5 !important;
+	}
+</style>
