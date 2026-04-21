@@ -50,8 +50,16 @@
 				</a>
 			</div>
 		</div>
-
-		<h3 class="mt-6 px-8 py-2">Your recent notes</h3>
+		<div class="flex justify-between">
+			<h3 class="mt-4 px-8 py-2">Your recent notes</h3>
+			<div class="mr-3 flex justify-end">
+				<a
+					href="/posts/viewall/{data.user.id}"
+					class="my-3 rounded-sm border-2 px-3 py-2 hover:bg-[var(--bg-card)] hover:no-underline!"
+					>Check all</a
+				>
+			</div>
+		</div>
 
 		<div class="grid max-w-full grid-cols-1 gap-y-3 px-4 py-2 md:flex">
 			{#each info.posts as post}

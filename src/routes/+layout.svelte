@@ -8,7 +8,7 @@
 
 	let { children, data } = $props();
 	const themes = ['warm', 'chalkboard', 'blueprint'];
-	let theme = $state(data.theme || 'warm');
+	let theme = $state(data.theme || 'blueprint');
 
 	async function saveTheme(newTheme: string) {
 		document.cookie = `user-theme=${newTheme}; path=/; max-age=31536000; SameSite=Lax`;
@@ -113,6 +113,8 @@
 					onmouseleave={() => (sidebar = !sidebar)}
 				>
 					<a href="/about">You</a>
+					<a href="/posts/viewall/{data.user.id}">Notes</a>
+					<a href="/create/tag">Tags</a>
 					<a href="/setting">Setting</a>
 					<a onclick={logout} href="/auth/login">Logout</a>
 				</div>
@@ -142,6 +144,7 @@
 						onmouseleave={() => (sidebar = !sidebar)}
 					>
 						<a href="/about">You</a>
+						<a href="/create/tag">Tags</a>
 						<a href="/setting">Setting</a>
 						<a onclick={logout} href="/auth/login">Logout</a>
 					</div>

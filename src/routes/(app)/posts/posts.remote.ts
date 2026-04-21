@@ -1,4 +1,4 @@
-import { form, getRequestEvent, command } from "$app/server";
+import { getRequestEvent, command, query } from "$app/server";
 import * as v from 'valibot';
 
 
@@ -35,3 +35,41 @@ export const saveToDb = command(v.object({
 
         return { type: "success", message: "Post made" }
     })
+
+
+
+
+
+export const getPublicPostByUser = query(v.string(), async (id) => {
+    const event = getRequestEvent()
+    const user_id = event.locals.user.id
+    if (id !== user_id) {
+        return { type: "unauthorized", message: "Unauthorized" }
+    }
+
+    const { data, error } = await event.locals.supabase.from('posts').select().eq('author_id', user_id).eq("is_public", true)
+
+    if (error) return { type: "db_error", message: "Something went wrong. Try again" }
+    console.log("Success")
+    return { type: "success", post: data }
+
+
+})
+
+
+
+export const getPrivatePostByUser = query(v.string(), async (id) => {
+    const event = getRequestEvent()
+    const user_id = event.locals.user.id
+    if (id !== user_id) {
+        return { type: "unauthorized", message: "Unauthorized" }
+    }
+
+    const { data, error } = await event.locals.supabase.from('posts').select().eq('author_id', user_id).eq("is_public", false)
+
+    if (error) return { type: "db_error", message: "Something went wrong. Try again" }
+    console.log("Success")
+    return { type: "success", post: data }
+
+
+})
