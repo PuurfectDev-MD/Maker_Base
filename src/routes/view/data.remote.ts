@@ -1,5 +1,4 @@
 import { command, form, getRequestEvent, query } from "$app/server";
-import { supabase } from "$lib/supabase";
 import * as v from 'valibot';
 
 export const getPostBySlug = query(v.string(), async (viewSlug) => {

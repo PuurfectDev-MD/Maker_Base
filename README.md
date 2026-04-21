@@ -41,11 +41,9 @@ Maker base sole purpose is to make you get concepts and navigate the ever evolvi
 ##  Pending work for  Version 1.0
 
 - **Complete dashboard:** Fetching streaks, total dots recieved, number of words written for users.
-- **Deleting Posts:** Deleting posts by the author.
-- **Updating Posts:** Editing posts by the author.
 -  **Core Pages:** Completing Settings, Info, and Profile sections(completely).
--  **Enhanced Content:** Support for YouTube embeds and tables within notes.
 - **Loading States:** Implementing proper Skeleton UI for data fetching(completely).
+-  **Enhanced Content:** Support for YouTube embeds and tables within notes.
 
 ---
 

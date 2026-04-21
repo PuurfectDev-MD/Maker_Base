@@ -56,7 +56,7 @@
 				<a
 					href="/posts/viewall/{data.user.id}"
 					class="my-3 rounded-sm border-2 px-3 py-2 hover:bg-[var(--bg-card)] hover:no-underline!"
-					>Check all</a
+					>All</a
 				>
 			</div>
 		</div>
@@ -77,7 +77,7 @@
 			{/each}
 		</div>
 
-		<div class="mt-4 mb-6 bg-[var(--bg-card)] pb-3 opacity-50">
+		<div class="mt-4 mb-6 rounded-lg bg-[var(--bg-card)] pb-3">
 			<div class=" mr-3 flex justify-end">
 				<a
 					href="/create/tag"

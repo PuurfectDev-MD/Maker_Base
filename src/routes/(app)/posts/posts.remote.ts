@@ -1,4 +1,5 @@
 import { getRequestEvent, command, query } from "$app/server";
+import { redirect } from "@sveltejs/kit";
 import * as v from 'valibot';
 
 
@@ -36,7 +37,38 @@ export const saveToDb = command(v.object({
         return { type: "success", message: "Post made" }
     })
 
+export const handleUpdate = command(v.object({
+    id: v.string(),
+    content: v.string(),
+    description: v.pipe(v.string(), v.nonEmpty()),
+    title: v.string(),
+    isPublic: v.boolean(),
+    selected: v.array(v.string())
+}), async ({ id, title, content, isPublic, description, selected }) => {
 
+    const event = getRequestEvent()
+    const user = event.locals.user.id
+
+    const { data: existingPost } = await event.locals.supabase.from("posts").select("author_id").eq("id", id).single()
+    if (!existingPost || existingPost.author_id !== user) {
+        return { type: "unauthorized", message: "You don't own this post." };
+    }
+    console.log('Sending info to db!')
+    const { data, error } = await event.locals.supabase.from('posts').update({
+        title,
+        description,
+        content,
+        is_public: isPublic,
+        tag_ids: selected
+    }).eq('id', id);
+
+
+    if (error) {
+        return { type: "db_error", message: "There was an erorr updating the post" }
+    }
+    return { type: "success", message: "Post updated :)" }
+
+})
 
 
 
@@ -72,4 +104,20 @@ export const getPrivatePostByUser = query(v.string(), async (id) => {
     return { type: "success", post: data }
 
 
+})
+
+
+export const deletePost = query(v.string(), async (id) => {
+    let event = getRequestEvent()
+
+
+    if (!event.locals.user.id) {
+        throw redirect(303, "/")
+    }
+    const { error } = await event.locals.supabase.from("posts").delete().eq("id", id)
+
+    if (error) {
+        return { type: "db_error", message: "There was an error deleting tags" }
+    }
+    return { type: "success", message: "deleted succesfully." }
 })
