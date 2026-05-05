@@ -1,8 +1,9 @@
-import { readFileSync } from 'fs'
+
+import readmeContent from '$root/README.md?raw'
 import { marked, type Tokens } from 'marked'
 
 export function load() {
-    const raw = readFileSync('README.md', 'utf-8')
+    const raw = readmeContent;
 
     // custom renderer to add id to headings
     const renderer = new marked.Renderer()
