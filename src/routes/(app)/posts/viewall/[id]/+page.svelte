@@ -58,7 +58,7 @@
 							>
 						</div>
 						<div class="flex justify-between">
-							<p class="">{post.created_at}</p>
+							<p class="">{post.created_at.split('T')[0]}</p>
 
 							<a
 								class=" cursor-pointer hover:scale-110 {deleting
@@ -105,7 +105,7 @@
 							>
 						</div>
 						<div class="flex justify-between">
-							<p class="">{post.created_at}</p>
+							<p class="">{post.created_at.split('T')[0]}</p>
 
 							<a
 								class=" cursor-pointer hover:scale-110 {deleting

@@ -16,15 +16,19 @@ export const getUserDash = query((v.string()), async (id) => {
     const recentTagsPromise = event.locals.supabase.from("tags").select("name, created_at").eq("author_id", id).limit(4).order("created_at", { ascending: false })
     const dotsCountPromise = event.locals.supabase.from("dots").select("*", { count: "exact", head: true }).eq("user_id", id)
     const streakPromise = event.locals.supabase.from("streak").select("current_streak").eq("user_id", id).maybeSingle()
+    const totalWordsCountPromise = event.locals.supabase
+        .rpc("get_total_words", { p_user_id: id })
+    const [postsResult, countResult, recentTagsResult, dotsCountResult, streakPromiseResult
+        , totalWordsCountPromiseResult
+    ] = await Promise.all([postsPromise, countPromise, recentTagsPromise, dotsCountPromise, streakPromise, totalWordsCountPromise]);
 
-    const [postsResult, countResult, recentTagsResult, dotsCountResult, streakPromiseResult] = await Promise.all([postsPromise, countPromise, recentTagsPromise, dotsCountPromise, streakPromise]);
-
-    if (postsResult.error || countResult.error || recentTagsResult.error || dotsCountResult.error || streakPromiseResult.error) {
+    if (postsResult.error || countResult.error || recentTagsResult.error || dotsCountResult.error || streakPromiseResult.error || totalWordsCountPromiseResult.error) {
         console.log(postsResult.error)
         console.log(countResult.error)
         console.log(recentTagsResult.error)
         console.log(dotsCountResult.error)
         console.log(streakPromiseResult.error)
+        console.log(totalWordsCountPromiseResult.error)
         return { type: "db_error", message: "There was an error fetching user data" }
     }
 
@@ -45,7 +49,8 @@ export const getUserDash = query((v.string()), async (id) => {
         totalCount: countResult.count,
         recentTags: recentTagsResult.data,
         dotsCount: dotsCountResult.count,
-        streakCount: streakPromiseResult.data?.current_streak ?? 0
+        streakCount: streakPromiseResult.data?.current_streak ?? 0,
+        totalWordsCount: totalWordsCountPromiseResult.data
     }
 })
 

@@ -24,7 +24,7 @@
 				<h2 class="pt-4">Dots recieved</h2>
 			</div>
 			<div class="card w-full md:w-1/5">
-				<h1 class="pt-2 text-7xl!">Y</h1>
+				<h1 class="pt-2 text-7xl!">{info.totalWordsCount}</h1>
 				<h2 class="pt-4">Words written</h2>
 			</div>
 			<div class="card w-full md:w-1/5">

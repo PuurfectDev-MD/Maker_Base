@@ -1,4 +1,4 @@
-# Maker Base
+# What is Maker Base?
 
 Maker Base is a dedicated platform for makers and developers to document concepts, ideas, and methodologies for future reference. It focuses on human-written knowledge to ensure deep understanding of internal systems, components, and workflows without relying on repetitive AI queries.
 
@@ -10,6 +10,18 @@ When working on complex projects, forgetting the minute details of how a compone
 The goal is to move away from asking AI the same questions repeatedly and instead build a personal (or community) library of verified, human-explained technical notes for thorough understanding concepts and mechanisms so you dont feel guilty when vibecoding some parts of your project to speed things up. (You CAN vibe code the stuff you can do it yourself and understand so let makerbase help you understand those fundamentals! )
 
 Maker base sole purpose is to make you get concepts and navigate the ever evolving techincal field with strong fundamentals.
+
+
+## Features
+- Write and organise notes by tags/topics
+- View public notes visible without login
+- Editor with tons of feature for a good writing exprience
+- Signup and Login with Google and email with password
+- Three themes — warm ivory, blueprint, chalkboard
+- Activity calendar and monthly chart on your about page
+- Option to private your notes
+- Edit, update and delete your notes
+- Words count, streak, dot count all available in user dashboard
 
 
 ---
@@ -63,9 +75,9 @@ If you have suggestions, bug fixes, or want to collaborate, feel free to reach o
 🔗 **Contact:** [manishd.is-a.dev](https://manishd.is-a.dev)
 
 
-
+---
 ### AI USE
-For a lot of debugging (😥), help with the setup of google auth, creating migration scripts for db policies, minor UI tweaks and brainstorming ideas :)
+For a lot of debugging (😥), help with the setup of google auth, creating migration scripts for db policies, creating rpc functions, info page load function and ui, minor UI tweaks and brainstorming ideas.
 -(for code written by Manish)
 
 ---

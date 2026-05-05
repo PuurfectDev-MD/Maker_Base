@@ -39,7 +39,7 @@
 		<div class="flex w-full flex-row items-center justify-between p-4">
 			<h1 class="p-2">{result.post.title}</h1>
 
-			{#if data.user.id == result.post.author_id}
+			{#if data?.user?.id == result.post.author_id}
 				<a
 					href="/create/update/{result.post.id}"
 					class=" bg-[var(--accent)] p-2 text-[var(--text-on-accent)]!">Edit</a
