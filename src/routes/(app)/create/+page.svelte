@@ -42,10 +42,7 @@
 			showError('Description required');
 			return false;
 		}
-		if (!selected.length) {
-			showError('Select a tag');
-			return false;
-		}
+
 		return true;
 	}
 
@@ -294,7 +291,7 @@
 		>
 	</div>
 {:else}
-	<div class="absolute bottom-0 left-5">
+	<div class="fixed bottom-5 left-5 z-20">
 		<button onclick={() => (sidebarVisible = !sidebarVisible)}><XIcon size={24}></XIcon></button>
 	</div>
 {/if}

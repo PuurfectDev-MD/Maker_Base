@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, uuid, boolean, integer, unique } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, uuid, boolean, integer, unique, date } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
     id: uuid('id').defaultRandom().primaryKey().notNull(),
@@ -57,3 +57,11 @@ export const tags = pgTable('tags', {
 }, (table) => ({
     uniqueTag: unique().on(table.authorId, table.name)
 }))
+
+
+export const streak = pgTable("streak", {
+    user_id: uuid("user_id").notNull().references(() => users.id, { onDelete: "cascade" }).primaryKey(),
+    currentStreak: integer("current_streak").notNull().default(0),
+    longestStreak: integer("longest_streak").notNull().default(0),
+    lastActiveDate: date("last_active_date").notNull().defaultNow()
+})

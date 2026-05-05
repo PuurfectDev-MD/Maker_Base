@@ -11,7 +11,7 @@
 	{#if info?.type == 'success'}
 		<h1 class="mt-4 p-3 text-7xl!">Hello, {data.user.username}</h1>
 		<div class=" px-4 py-2">
-			<h3>You have written {info.totalCount} notes across ___ topics.</h3>
+			<h3>You have written {info.totalCount} notes across {info.recentTags?.length} topics.</h3>
 		</div>
 
 		<div class="mt-4 grid max-w-full grid-cols-2 justify-evenly gap-x-3 gap-y-3 p-3 md:flex">
@@ -20,7 +20,7 @@
 				<h2 class="pt-4">Notes written</h2>
 			</div>
 			<div class="card w-full md:w-1/5">
-				<h1 class="pt-2 text-7xl!">X</h1>
+				<h1 class="pt-2 text-7xl!">{info.dotsCount}</h1>
 				<h2 class="pt-4">Dots recieved</h2>
 			</div>
 			<div class="card w-full md:w-1/5">
@@ -28,7 +28,7 @@
 				<h2 class="pt-4">Words written</h2>
 			</div>
 			<div class="card w-full md:w-1/5">
-				<h1 class="pt-2 text-7xl!">Z</h1>
+				<h1 class="pt-2 text-7xl!">{info.streakCount}</h1>
 				<h2 class="pt-4">Streak</h2>
 			</div>
 		</div>

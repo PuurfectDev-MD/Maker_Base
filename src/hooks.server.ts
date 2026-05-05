@@ -21,7 +21,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     event.locals.user = session?.user ?? null
 
 
-    const theme = event.cookies.get('user-theme') || 'warm';
+    const theme = event.cookies.get('user-theme') || 'blueprint';
 
     return resolve(event, {
         transformPageChunk: ({ html }) =>

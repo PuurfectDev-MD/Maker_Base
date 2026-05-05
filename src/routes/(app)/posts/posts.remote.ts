@@ -34,8 +34,18 @@ export const saveToDb = command(v.object({
             return { type: "db_error", message: "Something went wrong" }
         }
 
+        const updateSteakToDb = await updateStreak(user.id)
+
+        if (updateSteakToDb?.type === "db_error") {
+            await event.locals.supabase.from("posts").delete().eq("slug", slug)
+            console.log(updateSteakToDb?.message)
+            return { type: "db_error", message: "There was an error while updating the streak" }
+        }
+
         return { type: "success", message: "Post made" }
     })
+
+
 
 export const handleUpdate = command(v.object({
     id: v.string(),
@@ -121,3 +131,48 @@ export const deletePost = query(v.string(), async (id) => {
     }
     return { type: "success", message: "deleted succesfully." }
 })
+
+
+
+
+
+async function updateStreak(id: string) {
+    const today = new Date().toISOString().split("T")[0];
+
+    const event = getRequestEvent()
+
+    const { data, error } = await event.locals.supabase.from("streak").select("*").eq("user_id", id).single()
+
+    if (error) return { type: "db_error", message: "There was an error fetching your streak" }
+
+
+
+    let streak = data.current_streak
+    let longest_streak = data.longest_streak
+
+    const lastActive = data.last_active_date
+    console.log("lastActive:", lastActive)
+    console.log("today:", today)
+    if (lastActive == today) return
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0]
+    const isConsecutive = lastActive == yesterday
+
+
+    const newStreak = isConsecutive ? streak + 1 : 1
+    const newLongest = Math.max(newStreak, longest_streak)
+
+    const { error: updateerr } = await event.locals.supabase.from("streak").update({
+        longest_streak: newLongest,
+        current_streak: newStreak,
+        last_active_date: today
+    }).eq("user_id", id)
+
+    if (updateerr) {
+        console.log(updateerr.message)
+        return {
+            type: "db_error", message: updateerr.message
+        }
+
+    }
+    return { type: "success", message: "Your streak was updated." }
+}

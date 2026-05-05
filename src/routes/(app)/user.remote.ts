@@ -14,20 +14,38 @@ export const getUserDash = query((v.string()), async (id) => {
     //getting user post count
     const countPromise = db.from("posts").select("*", { count: "exact", head: true }).eq("author_id", id)
     const recentTagsPromise = event.locals.supabase.from("tags").select("name, created_at").eq("author_id", id).limit(4).order("created_at", { ascending: false })
-    const [postsResult, countResult, recentTagsResult] = await Promise.all([postsPromise, countPromise, recentTagsPromise]);
+    const dotsCountPromise = event.locals.supabase.from("dots").select("*", { count: "exact", head: true }).eq("user_id", id)
+    const streakPromise = event.locals.supabase.from("streak").select("current_streak").eq("user_id", id).maybeSingle()
 
-    if (postsResult.error || countResult.error || recentTagsResult.error) {
+    const [postsResult, countResult, recentTagsResult, dotsCountResult, streakPromiseResult] = await Promise.all([postsPromise, countPromise, recentTagsPromise, dotsCountPromise, streakPromise]);
+
+    if (postsResult.error || countResult.error || recentTagsResult.error || dotsCountResult.error || streakPromiseResult.error) {
         console.log(postsResult.error)
         console.log(countResult.error)
         console.log(recentTagsResult.error)
+        console.log(dotsCountResult.error)
+        console.log(streakPromiseResult.error)
         return { type: "db_error", message: "There was an error fetching user data" }
+    }
+
+    if (streakPromiseResult.data == null) {
+        const { error: streakRowInsert } = await event.locals.supabase.from("streak").insert({
+            user_id: id
+        })
+        if (streakRowInsert) {
+            console.log(streakRowInsert)
+            return { type: "db_error", message: "There was an error creating streak row" }
+        }
+
     }
 
     return {
         type: 'success',
         posts: postsResult.data,
         totalCount: countResult.count,
-        recentTags: recentTagsResult.data
+        recentTags: recentTagsResult.data,
+        dotsCount: dotsCountResult.count,
+        streakCount: streakPromiseResult.data?.current_streak ?? 0
     }
 })
 
