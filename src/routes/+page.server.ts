@@ -1,10 +1,14 @@
-import { redirect } from '@sveltejs/kit'
+export async function load(event) {
+    const statsPromise = event.locals.supabase.rpc('get_site_stats')
+        .then(res => res.data);
 
-export function load({ locals }) {
-    if (locals.user?.id) {
-        redirect(303, `/${locals.user.id}`)
-    }
+    const notesPromise = event.locals.supabase.rpc('get_recent_posts_with_tags')
+        .then(res => res.data);
+
     return {
-        user: locals.user
-    }
+        streamed: {
+            stats: statsPromise,
+            notes: notesPromise
+        }
+    };
 }

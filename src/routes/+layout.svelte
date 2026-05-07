@@ -105,7 +105,7 @@
 			>
 			{#if sidebar}
 				<div
-					class="absolute top-[10vh] right-10 flex flex-col gap-y-2 bg-[var(--bg-card)] p-4"
+					class="absolute top-[10vh] right-10 z-50 flex flex-col gap-y-2 bg-[var(--bg-card)] p-4"
 					onmouseleave={() => (sidebar = !sidebar)}
 				>
 					<a href="/about">You</a>
