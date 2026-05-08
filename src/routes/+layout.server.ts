@@ -1,5 +1,4 @@
 
-
 export function load({ locals, cookies }) {
     const theme = cookies.get('user-theme') || 'blueprint';
     return {

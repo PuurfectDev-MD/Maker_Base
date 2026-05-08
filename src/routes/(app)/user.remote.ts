@@ -55,6 +55,34 @@ export const getUserDash = query((v.string()), async (id) => {
 })
 
 
+
+export const getUserAboutPage = query(v.string(), async (id) => {
+    const event = getRequestEvent()
+    const postCountPromise = event.locals.supabase.from("posts").select("*", { count: "exact", head: true }).eq("author_id", id)
+    const totalWordsCountPromise = event.locals.supabase
+        .rpc("get_total_words", { p_user_id: id })
+    const dotsCountPromise = event.locals.supabase.from("dots").select("*", { count: "exact", head: true }).eq("user_id", id)
+    const streakPromise = event.locals.supabase.from("streak").select("current_streak").eq("user_id", id).maybeSingle()
+    const LongestStreakPromise = event.locals.supabase.from("streak").select("longest_streak").eq("user_id", id).maybeSingle()
+
+
+    const [wordsCountResult, dotsResult, currentStreakResult, lStreakResult, postCountResult] = await Promise.all([totalWordsCountPromise, dotsCountPromise, streakPromise, LongestStreakPromise, postCountPromise])
+
+    if (lStreakResult.error || wordsCountResult.error || dotsResult.error || currentStreakResult.error || postCountResult.error) {
+        return { type: "db_error", message: "there was an error fetching your profile data" }
+    }
+
+    return {
+        type: "success",
+        totalWordsCount: wordsCountResult.data,
+        dotsCount: dotsResult.count ?? 0,
+        postCount: postCountResult.count ?? 0,
+        currentStreak: currentStreakResult.data?.current_streak ?? 0,
+        longestStreak: lStreakResult.data?.longest_streak ?? 0
+
+    }
+})
+
 export const getPostCountPerMonth = query((v.string()), async (id) => {
 
     const { error, data } = await supabase.from('posts').select('created_at').eq("author_id", id)

@@ -3,7 +3,8 @@ import { redirect } from '@sveltejs/kit';
 export async function load(event) {
 
     if (event.locals.user?.id) {
-        throw redirect(303, `/${event.locals.user.id}`)
+        console.log("Redirect triggered for:", event.locals.user.id)
+        throw redirect(307, `/${event.locals.user.id}`)
 
     }
     const statsPromise = event.locals.supabase.rpc('get_site_stats')
