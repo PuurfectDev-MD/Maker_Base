@@ -47,17 +47,10 @@ Maker base sole purpose is to make you get concepts and navigate the ever evolvi
 * **Backend & Auth:** [Supabase](https://supabase.com/)
 * **Rich Text Editor:** [Tiptap](https://tiptap.dev/)
 * **Data Visualization:** [LayerChart](https://layerchart.com/)
+* **For caching:** [Redis](https://app.redislabs.com/)
 
 ---
 
-##  Pending work for  Version 1.0
-
-- **Complete dashboard:** Fetching streaks, total dots recieved, number of words written for users.
--  **Core Pages:** Completing Settings, Info, and Profile sections(completely).
-- **Loading States:** Implementing proper Skeleton UI for data fetching(completely).
--  **Enhanced Content:** Support for YouTube embeds and tables within notes.
-
----
 
 ## Future Vision
 
