@@ -5,6 +5,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 
 	import { UserIcon, ListIcon } from 'phosphor-svelte';
+	import { page } from '$app/state';
 
 	let { children, data } = $props();
 	const themes = ['warm', 'chalkboard', 'blueprint'];
@@ -36,7 +37,9 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
-<nav class="hidden grid-cols-3 items-center px-4 py-1 md:grid">
+<nav
+	class="hidden grid-cols-3 items-center border-b-2! border-[var(--text-muted)] px-4 py-1 md:grid"
+>
 	<div class="px-4">
 		<svg
 			preserveAspectRatio="xMidYMid meet"
@@ -70,12 +73,33 @@
 			/>
 		</svg>
 	</div>
+
 	<div class="flex flex-row justify-center gap-x-8 text-2xl">
-		<a href="/">Home</a>
-		<a href="/explore">Explore</a>
-		<a href="/create">Create</a>
+		<a
+			href="/"
+			class={page.url.pathname === `/${data?.user.id}`
+				? 'underline! decoration-[var(--accent)] decoration-2 underline-offset-5'
+				: ''}>Home</a
+		>
+		<a
+			class={page.url.pathname === `/explore`
+				? 'underline! decoration-[var(--accent)] decoration-2 underline-offset-4'
+				: ''}
+			href="/explore">Explore</a
+		>
+		<a
+			class={page.url.pathname === `/create`
+				? 'underline! decoration-[var(--accent)] decoration-2 underline-offset-4'
+				: ''}
+			href="/create">Create</a
+		>
 		{#if data.user?.id}
-			<a href="/community">Community</a>
+			<a
+				class={page.url.pathname === `/community`
+					? 'underline! decoration-[var(--accent)] decoration-2 underline-offset-4'
+					: ''}
+				href="/community">Community</a
+			>
 		{:else}
 			<a href="/info">Info</a>
 		{/if}

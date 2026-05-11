@@ -160,7 +160,7 @@
 	<div class="card max-w-[400px]">
 		<h1>Community</h1>
 		<p class="pt-3">
-			Other people cn get your notes (if you set it to public) and send you dots and suggestions!
+			Other people can get your notes (if you set it to public) and send you dots and suggestions!
 			Amazing way to learn, grow and better your understanding of a concept.
 		</p>
 	</div>

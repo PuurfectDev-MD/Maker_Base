@@ -48,7 +48,6 @@ Maker base sole purpose is to make you get concepts and navigate the ever evolvi
 * **Rich Text Editor:** [Tiptap](https://tiptap.dev/)
 * **Data Visualization:** [LayerChart](https://layerchart.com/)
 * **For caching:** [Redis](https://app.redislabs.com/)
-
 ---
 
 
@@ -61,15 +60,49 @@ Maker base sole purpose is to make you get concepts and navigate the ever evolvi
 
 ---
 
+## Contributing
+
+I am actively looking for contributors to help bring these ideas to life! If you're interested in any of the following, feel free to open an issue or submit a PR.
+
+### AI implementation
+
+* **AI Fact-Checking:** Implement an AI-driven fact-checking system via API to help users validate written content in real-time.
+Refer to this if you are planning on contributing for this feature - [Check this out](https://www.blocknotejs.org/docs/features/ai). Im not looking for AI text generation though, just AI correction.
+
+![Ai feature image](/images/aifeature.png)
+
+### Journalling 
+
+* **Export & Project Generation:** Develop a feature to bundle related notes into a "Project" and generate consolidated PDF or Markdown file exports.
+
+### Social & Community
+
+* **Account Following System:** A social layer allowing users to follow fellow makers, stay updated on new notes, and even chat with them? (thats rather optimistic though.) Im thinking something close to what Github has!
+
+* **Global Community Hub:** Completion of the Community Page, featuring real-time chat rooms organized by tags (e.g., #electronics, #javascript, #unity).
+
+![Community page](/images/community.png)
+
+---
+
+I would be more than happy to work with you on any of these features or more. To contribute -
+
+1. **Pick a feature** from the options given above or any bug you manage to find.
+2. **Open an Issue** to discuss your planned implementation.
+3. **Fork the repo** and submit a pull request.
+
+I cant wait to work with you :) 
+
+---
+
 ## Contact & Feedback
 
-If you have suggestions, bug fixes, or want to collaborate, feel free to reach out from the contact at :
-
+If you have suggestions for more features, bug fixes, or want to collaborate, feel free to reach out from the contact at :
 🔗 **Contact:** [manishd.is-a.dev](https://manishd.is-a.dev)
 
 
 ---
-### AI USE
+## AI USE
 For a lot of debugging (😥), help with the setup of google auth, creating migration scripts for db policies, creating rpc functions, info page load function and ui, minor UI tweaks and brainstorming ideas.
 -(for code written by Manish)
 
