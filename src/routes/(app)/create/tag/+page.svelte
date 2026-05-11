@@ -5,6 +5,7 @@
 	let { data } = $props();
 	let addNew = $state(false);
 	let loading = $state(true);
+	let error = $state('');
 	let tags = $state<{
 		all: { id: string; name: string }[];
 		recent: { id: string; name: string }[];
@@ -15,6 +16,8 @@
 			getUserTags(data.user.id).then((result) => {
 				tags = result;
 			});
+		} else {
+			error = 'There was an error adding the tag: ';
 		}
 	});
 
@@ -104,6 +107,13 @@
 	</div>
 {/if}
 
-{#if addNewTag.result?.type == 'db_error'}
-	<p>There was a db error</p>
+{#if error}
+	<div class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+		<div class="flex flex-col items-center gap-4 rounded bg-[var(--color-bg-secondary)] p-4">
+			<p class="font-medium text-[var(--color-accent)]!">{error}</p>
+			<button class=" cursor-pointer rounded px-4 py-1 font-medium" onclick={() => (error = '')}>
+				Close
+			</button>
+		</div>
+	</div>
 {/if}

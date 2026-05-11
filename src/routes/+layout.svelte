@@ -38,7 +38,9 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 <nav
-	class="hidden grid-cols-3 items-center border-b-2! border-[var(--text-muted)] px-4 py-1 md:grid"
+	class="hidden grid-cols-3 items-center px-4 py-1 md:grid"
+	class:border-b-2={data.user?.id}
+	class:border-[var(--text-muted)]={data.user?.id}
 >
 	<div class="px-4">
 		<svg
@@ -77,7 +79,7 @@
 	<div class="flex flex-row justify-center gap-x-8 text-2xl">
 		<a
 			href="/"
-			class={page.url.pathname === `/${data?.user.id}`
+			class={page.url.pathname === `/${data.user?.id}` || page.url.pathname === `/`
 				? 'underline! decoration-[var(--accent)] decoration-2 underline-offset-5'
 				: ''}>Home</a
 		>
@@ -101,7 +103,12 @@
 				href="/community">Community</a
 			>
 		{:else}
-			<a href="/info">Info</a>
+			<a
+				class={page.url.pathname === `/info`
+					? 'underline! decoration-[var(--accent)] decoration-2 underline-offset-4'
+					: ''}
+				href="/info">Info</a
+			>
 		{/if}
 	</div>
 

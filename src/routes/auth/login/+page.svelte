@@ -33,7 +33,6 @@
 		}
 
 		await new Promise((resolve) => setTimeout(resolve, 1000));
-		window.location.href = `/${data.user?.id}`;
 	}
 </script>
 
@@ -72,21 +71,29 @@
 
 <div class="bottom-0 mt-10 flex flex-row justify-center gap-x-10 p-8">
 	<h1 class="p-3">Dont have an account?</h1>
-	<a href="/auth/signup" class="rounded-2xl border-2 border-r-4 p-3 no-underline!"> Signup</a>
+	<a href="/auth/signup" class="h-fit rounded-2xl border-2 border-r-4 px-4 py-3 no-underline!">
+		Signup</a
+	>
 </div>
 
 {#if error_message}
-	<div
-		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
-	>
-		<p class="px-8 py-4 text-xl md:text-2xl">{error_message}</p>
+	<div class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+		<div class="flex flex-col items-center gap-4 rounded bg-[var(--color-bg-secondary)] p-4">
+			<p class="font-medium text-[var(--color-accent)]!">{error_message}</p>
+			<button
+				class=" cursor-pointer rounded px-4 py-1 font-medium"
+				onclick={() => (error_message = '')}
+			>
+				Close
+			</button>
+		</div>
 	</div>
 {/if}
 
 {#if logging_in}
 	<div
-		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-[var(--accent)] shadow-lg backdrop-blur-sm transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
 	>
-		<p class="px-8 py-4 text-xl md:text-2xl">Give me a moment...</p>
+		<p class="px-8 py-4 text-xl text-[var(--text-on-accent)]! md:text-2xl">Give me a moment</p>
 	</div>
 {/if}

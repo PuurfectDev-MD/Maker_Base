@@ -380,12 +380,14 @@
 <!-- Editor -->
 <div bind:this={container} class="editor mt-10 h-auto rounded-2xl"></div>
 
-<!-- Error -->
 {#if error}
-	<div
-		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg md:bottom-[80%] md:h-[10vh] md:w-[40%]"
-	>
-		<p class="px-8 py-4 text-xl md:text-2xl">{error}</p>
+	<div class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+		<div class="flex flex-col items-center gap-4 rounded bg-[var(--color-bg-secondary)] p-4">
+			<p class="font-medium text-[var(--color-accent)]!">{error}</p>
+			<button class=" cursor-pointer rounded px-4 py-1 font-medium" onclick={() => (error = '')}>
+				Close
+			</button>
+		</div>
 	</div>
 {/if}
 

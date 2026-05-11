@@ -117,10 +117,14 @@
 				style="background:var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-top: 1.5rem; color:var(--accent);"
 			>
 				<CalendarActivity
-					data={calendarData.PostDCounts?.map((item) => ({
-						...item,
-						date: new Date(item.date)
-					}))}
+					data={calendarData.PostDCounts?.map((item) => {
+						const d = new Date(item.date);
+						d.setHours(0, 0, 0, 0);
+						return {
+							...item,
+							date: d
+						};
+					})}
 				/>
 			</div>
 		{/await}

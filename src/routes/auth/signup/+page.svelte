@@ -109,18 +109,24 @@
 </div>
 
 {#if error_message}
-	<div
-		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
-	>
-		<p class="px-8 py-4 text-xl md:text-2xl">{error_message}</p>
+	<div class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+		<div class="flex flex-col items-center gap-4 rounded bg-[var(--color-bg-secondary)] p-4">
+			<p class="font-medium text-[var(--color-accent)]!">{error_message}</p>
+			<button
+				class=" cursor-pointer rounded px-4 py-1 font-medium"
+				onclick={() => (error_message = '')}
+			>
+				Close
+			</button>
+		</div>
 	</div>
 {/if}
 
 {#if signing}
 	<div
-		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-red-500 text-white shadow-lg transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
+		class="fixed right-[-1rem] bottom-[8vh] w-[90%] animate-pulse rounded-lg bg-[var(--accent)] shadow-lg backdrop-blur-sm transition-all md:right-[-2rem] md:bottom-[80%] md:h-[10vh] md:w-[40%]"
 	>
-		<p class="px-8 py-4 text-xl md:text-2xl">Check your email :)</p>
+		<p class="px-8 py-4 text-xl text-[var(--text-on-accent)]! md:text-2xl">Check your email :)</p>
 	</div>
 {/if}
 
