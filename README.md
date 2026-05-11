@@ -69,7 +69,7 @@ I am actively looking for contributors to help bring these ideas to life! If you
 * **AI Fact-Checking:** Implement an AI-driven fact-checking system via API to help users validate written content in real-time.
 Refer to this if you are planning on contributing for this feature - [Check this out](https://www.blocknotejs.org/docs/features/ai). Im not looking for AI text generation though, just AI correction.
 
-![Ai feature image](/images/aifeature.png)
+![AI Feature](https://github.com/PuurfectDev-MD/Maker_Base/raw/main/static/images/aifeature.png)
 
 ### Journalling 
 
@@ -81,7 +81,7 @@ Refer to this if you are planning on contributing for this feature - [Check this
 
 * **Global Community Hub:** Completion of the Community Page, featuring real-time chat rooms organized by tags (e.g., #electronics, #javascript, #unity).
 
-![Community page](/images/community.png)
+![Community Feature](https://github.com/PuurfectDev-MD/Maker_Base/raw/main/static/images/community.png)
 
 ---
 
