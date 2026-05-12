@@ -16,8 +16,6 @@
 			getUserTags(data.user.id).then((result) => {
 				tags = result;
 			});
-		} else {
-			error = 'There was an error adding the tag: ';
 		}
 	});
 
