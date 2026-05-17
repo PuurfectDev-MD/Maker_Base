@@ -89,7 +89,7 @@ export const getPublicPostByUser = query(v.string(), async (id) => {
         return { type: "unauthorized", message: "Unauthorized" }
     }
 
-    const { data, error } = await event.locals.supabase.from('posts').select().eq('author_id', user_id).eq("is_public", true)
+    const { data, error } = await event.locals.supabase.from('posts').select("title, slug, description,dots_count, id, created_at").eq('author_id', user_id).eq("is_public", true)
 
     if (error) return { type: "db_error", message: "Something went wrong. Try again" }
     console.log("Success")
@@ -107,7 +107,7 @@ export const getPrivatePostByUser = query(v.string(), async (id) => {
         return { type: "unauthorized", message: "Unauthorized" }
     }
 
-    const { data, error } = await event.locals.supabase.from('posts').select().eq('author_id', user_id).eq("is_public", false)
+    const { data, error } = await event.locals.supabase.from('posts').select("title, slug, description,dots_count, id, created_at").eq('author_id', user_id).eq("is_public", false)
 
     if (error) return { type: "db_error", message: "Something went wrong. Try again" }
     console.log("Success")
